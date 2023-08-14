@@ -2,12 +2,12 @@ import { Evento } from './Evento';
 import { RedeSocial } from './RedeSocial';
 
 export interface Palestrante {
-  Id: number;
-  Nome: string;
-  MiniCurriculo: string;
-  ImagemUrl: string;
-  Telefone: string;
-  Email: string;
-  RedesSociais?: RedeSocial[];
-  PalestranteEvento: Evento[];
+  id: number;
+  nome: string;
+  miniCurriculo: string;
+  imagemUrl: string;
+  telefone: string;
+  email: string;
+  redesSociais?: RedeSocial[];
+  palestranteEvento: Evento[];
 }
