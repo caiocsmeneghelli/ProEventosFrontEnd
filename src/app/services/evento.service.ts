@@ -3,11 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Evento } from '../models/Evento';
 
-@Injectable(
-  {
-    providedIn: 'root'
-  }
-)
+@Injectable()
+
 export class EventoService {
   constructor(private http: HttpClient) {}
 

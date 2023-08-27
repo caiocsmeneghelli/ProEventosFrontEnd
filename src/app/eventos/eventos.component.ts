@@ -15,6 +15,7 @@ export class EventosComponent implements OnInit {
   larguraImg: number = 50;
   margemImg: number = 2;
   mostrarImg: boolean = true;
+  exibirImg: boolean = true;
 
   private _filtroLista: string = '';
 
@@ -31,7 +32,7 @@ export class EventosComponent implements OnInit {
   public filtrarEventos(filtrarPor: string): Evento[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.eventos.filter(
-      (evento: any) =>
+      (evento: Evento) =>
         evento.tema.toLocaleLowerCase().indexOf(filtrarPor) !== -1
     );
   }
@@ -44,6 +45,7 @@ export class EventosComponent implements OnInit {
 
   public alterarImagem() {
     this.mostrarImg = !this.mostrarImg;
+    this.exibirImg = this.mostrarImg;
   }
   public getEventos(): void {
     this.eventoService.getEventos().subscribe(
