@@ -45,12 +45,16 @@
       <td>{{evento.dataEvento | DateTimeFormat}}</td>
       <td>{{evento.qtdPessoas}}</td>
       <td>{{evento.lotes[0].nome}}</td>
-      <td><button type="button" class="btn btn-primary btn-sm mr-2">
-        <i class="fa fa-edit"></i>
-      </button>
-      <button type="button" class="btn btn-danger btn-sm">
-        <i class="fa fa-trash"></i>
-      </button></td>
+      <td>
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary btn-sm mr-2" tooltip="Editar">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-danger btn-sm" tooltip="Excluir">
+            <i class="fa fa-trash"></i>
+          </button>
+        </div>
+      </td>
     </tr>
   </tbody>
   <tfoot *ngIf="!eventos.length">
