@@ -32,15 +32,15 @@
       <td>
         <img [collapse]="!mostrarImg"
         [isAnimated]="true"
-        src="assets/{{evento.imagemUrl}}"
+        src="assets/{{evento.imagemURL}}"
         [style.width.px]="larguraImg"
         [style.margin.px]="margemImg">
       </td>
-      <td>{{evento.eventoId}}</td>
+      <td>{{evento.id}}</td>
       <td>{{evento.tema}}</td>
       <td>{{evento.local}}</td>
       <td>{{evento.dataEvento}}</td>
-      <td>{{evento.quantidadePessoas}}</td>
+      <td>{{evento.qtdPessoas}}</td>
       <td>{{evento.lote}}</td>
       <td><button class="btn">Edit</button></td>
     </tr>
