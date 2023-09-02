@@ -8,6 +8,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { EventosComponent } from './eventos/eventos.component';
@@ -34,7 +35,16 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     CollapseModule.forRoot(),
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ToastrModule.forRoot(
+      {
+        timeOut:5000,
+        positionClass: 'toast-bottom-right',
+        preventDuplicates: true,
+        progressBar: true,
+
+      }
+    )
   ],
   bootstrap: [AppComponent],
 })
