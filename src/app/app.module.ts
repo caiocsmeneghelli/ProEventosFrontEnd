@@ -17,6 +17,7 @@ import { EventosComponent } from './components/eventos/eventos.component';
 import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 import { TitleComponent } from './shared/title/title.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,6 +34,7 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     TitleComponent,
     DashboardComponent,
     ContatosComponent,
+    PerfilComponent,
     DateTimeFormatPipe,
   ],
   imports: [
