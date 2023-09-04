@@ -13,10 +13,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppComponent } from './app.component';
-import { EventosComponent } from './eventos/eventos.component';
-import { PalestrantesComponent } from './palestrantes/palestrantes.component';
+import { EventosComponent } from './components/eventos/eventos.component';
+import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ContatosComponent } from './components/contatos/contatos.component';
+import { TitleComponent } from './shared/title/title.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavComponent } from './nav/nav.component';
+import { NavComponent } from './components/nav/nav.component';
 
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 
@@ -26,6 +30,9 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     EventosComponent,
     PalestrantesComponent,
     NavComponent,
+    TitleComponent,
+    DashboardComponent,
+    ContatosComponent,
     DateTimeFormatPipe,
   ],
   imports: [
