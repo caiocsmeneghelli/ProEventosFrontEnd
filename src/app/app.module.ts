@@ -21,7 +21,7 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { TitleComponent } from './shared/title/title.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavComponent } from './components/nav/nav.component';
+import { NavComponent } from './shared/nav/nav.component';
 
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 
