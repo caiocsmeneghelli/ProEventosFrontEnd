@@ -14,6 +14,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppComponent } from './app.component';
 import { EventosComponent } from './components/eventos/eventos.component';
+import { EventosDetalheComponent } from './components/eventos/eventos-detalhe/eventos-detalhe.component';
+import { EventosListaComponent } from './components/eventos/eventos-lista/eventos-lista.component';
 import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
@@ -36,6 +38,8 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     ContatosComponent,
     PerfilComponent,
     DateTimeFormatPipe,
+    EventosDetalheComponent,
+    EventosListaComponent,
   ],
   imports: [
     BrowserModule,
