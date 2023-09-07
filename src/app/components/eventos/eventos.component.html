@@ -29,7 +29,7 @@
   <table class="table table-striped">
     <thead class="table-dark">
       <tr>
-        <th>
+        <th class="d-none d-md-table-cell">
           <button
             class="btn btn-outline-light btn-small"
             (click)="alterarImagem()"
@@ -40,16 +40,16 @@
         </th>
         <th>#</th>
         <th>Tema</th>
-        <th>Local</th>
+        <th class="d-none d-md-table-cell">Local</th>
         <th>Data</th>
-        <th>Qtd Pessoas</th>
-        <th>Lote</th>
+        <th class="d-none d-md-table-cell">Qtd Pessoas</th>
+        <th class="d-none d-md-table-cell">Lote</th>
         <th>Options</th>
       </tr>
     </thead>
     <tbody *ngIf="eventos && eventos.length">
       <tr *ngFor="let evento of eventos">
-        <td>
+        <td class="d-none d-md-table-cell">
           <img
             [collapse]="!mostrarImg"
             [isAnimated]="true"
@@ -60,22 +60,14 @@
         </td>
         <td>{{ evento.id }}</td>
         <td>{{ evento.tema }}</td>
-        <td>{{ evento.local }}</td>
+        <td class="d-none d-md-table-cell">{{ evento.local }}</td>
         <td>{{ evento.dataEvento | DateTimeFormat }}</td>
-        <td>{{ evento.qtdPessoas }}</td>
-        <td>{{ evento.lotes[0].nome }}</td>
+        <td class="d-none d-md-table-cell">{{ evento.qtdPessoas }}</td>
+        <td class="d-none d-md-table-cell">{{ evento.lotes[0].nome }}</td>
         <td>
           <button
             type="button"
-            class="btn btn-primary btn-sm"
-            data-bs-toggle="tooltip"
-            title="Editar"
-          >
-            <i class="fa fa-edit"></i>
-          </button>
-          <button
-            type="button"
-            class="btn btn-danger btn-sm"
+            class="btn btn-danger btn-lg"
             data-bs-toggle="tooltip"
             title="Excluir"
             (click)="openModal(template)"
