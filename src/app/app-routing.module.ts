@@ -8,6 +8,7 @@ import { ContatosComponent } from './components/contatos/contatos.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { EventosDetalheComponent } from './components/eventos/eventos-detalhe/eventos-detalhe.component';
 import { EventosListaComponent } from './components/eventos/eventos-lista/eventos-lista.component';
+import { LoginComponent } from './components/user/login/login.component';
 
 const routes: Routes = [
   { path: 'eventos', redirectTo: 'eventos/lista'},
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'contatos', component: ContatosComponent },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
+  {path: 'login', component: LoginComponent}
 ];
 
 @NgModule({
