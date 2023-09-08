@@ -10,6 +10,7 @@ import { EventosDetalheComponent } from './components/eventos/eventos-detalhe/ev
 import { EventosListaComponent } from './components/eventos/eventos-lista/eventos-lista.component';
 
 const routes: Routes = [
+  { path: 'eventos', redirectTo: 'eventos/lista'},
   {
     path: 'eventos',
     component: EventosComponent,

@@ -3,7 +3,7 @@
     <div class="flex-fill pe-3">
       <div class="input-group mb-2">
         <div class="input-group-prepend"></div>
-        <div class="input-group-text"> Filtro </div>
+        <div class="input-group-text">Filtro</div>
         <input
           type="text"
           class="form-control mr-2"
@@ -20,7 +20,7 @@
     </div>
   </div>
   <!-- <h3>Filtro: {{ filtroLista }}</h3> -->
-  <table class="table table-striped">
+  <table class="table table-striped table-hover">
     <thead class="table-dark">
       <tr>
         <th class="d-none d-md-table-cell">
@@ -42,7 +42,11 @@
       </tr>
     </thead>
     <tbody *ngIf="eventos && eventos.length">
-      <tr *ngFor="let evento of eventos">
+      <tr
+        *ngFor="let evento of eventos"
+        (click)="detalharEvento(evento.id)"
+        style="cursor: pointer"
+      >
         <td class="d-none d-md-table-cell">
           <img
             [collapse]="!mostrarImg"
