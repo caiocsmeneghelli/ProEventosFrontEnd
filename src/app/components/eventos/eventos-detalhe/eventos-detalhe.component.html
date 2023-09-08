@@ -6,10 +6,11 @@
           <label>Tema</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control is-invalid"
             formControlName="tema"
             placeholder="Insira o Tema"
           />
+          <div class="invalid-feedback">Tema é obrigatório</div>
         </div>
       </div>
       <div class="form-row">
@@ -17,19 +18,21 @@
           <label>Local</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control is-invalid"
             formControlName="local"
             placeholder=""
           />
+          <div class="invalid-feedback">Local é obrigatório</div>
         </div>
         <div class="form-group col-md-4">
           <label>Data e Hora</label>
           <input
             type="datetime"
-            class="form-control"
+            class="form-control is-invalid"
             formControlName="dataEvento"
             placeholder=""
           />
+          <div class="invalid-feedback">Data e Hora é obrigatório</div>
         </div>
       </div>
       <div class="form-row">
@@ -41,33 +44,37 @@
             formControlName="qtdPessoas"
             placeholder=""
           />
+          <div class="invalid-feedback">Qtd Pessoas é obrigatório</div>
         </div>
         <div class="form-group col-md-2">
           <label>Telefone</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control is-invalid"
             formControlName="telefone"
             placeholder="(000) 90000-0000"
           />
+          <div class="invalid-feedback">Telefone é obrigatório</div>
         </div>
         <div class="form-group col-md-4">
           <label>Email</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control is-invalid"
             formControlName="email"
             placeholder="e-mail"
           />
+          <div class="invalid-feedback">Email é obrigatório</div>
         </div>
         <div class="form-group col-md-4">
           <label>Imagem</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control is-invalid"
             formControlName="imagemURL"
             placeholder="imagem"
           />
+          <div class="invalid-feedback">Imagem é obrigatório</div>
         </div>
       </div>
     </div>
