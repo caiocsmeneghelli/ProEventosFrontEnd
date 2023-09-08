@@ -12,7 +12,11 @@ import {
   styleUrls: ['./eventos-detalhe.component.scss'],
 })
 export class EventosDetalheComponent implements OnInit {
-  form: FormGroup = this.formBuilder.group({});
+  form!: FormGroup;
+
+  get f():any{
+    return this.form.controls;
+  }
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
@@ -20,21 +24,21 @@ export class EventosDetalheComponent implements OnInit {
   }
 
   public validation(): void {
-    this.form = new FormGroup({
-      tema: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(50),
-      ]),
-      local: new FormControl('', Validators.required),
-      dataEvento: new FormControl('', Validators.required),
-      qtdPessoas: new FormControl('', [
-        Validators.required,
-        Validators.max(120000),
-      ]),
-      telefone: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      imagemURL: new FormControl('', Validators.required),
+    this.form = this.formBuilder.group({
+      tema: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(50),
+        ],
+      ],
+      local: ['', Validators.required],
+      dataEvento: ['', Validators.required],
+      qtdPessoas: ['', [Validators.required, Validators.max(120000)]],
+      telefone: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      imagemURL: ['', Validators.required],
     });
   }
 }
