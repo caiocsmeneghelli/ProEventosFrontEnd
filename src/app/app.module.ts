@@ -19,7 +19,7 @@ import { EventosListaComponent } from './components/eventos/eventos-lista/evento
 import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
-import { PerfilComponent } from './components/perfil/perfil.component';
+import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { TitleComponent } from './shared/title/title.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
