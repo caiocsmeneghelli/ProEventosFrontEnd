@@ -6,14 +6,14 @@
           <label>Tema</label>
           <input
             type="text"
-            [ngClass]="{'is-invalid': form.get('tema')?.errors && form.get('tema')?.touched}"
+            [ngClass]="{'is-invalid': f.tema?.errors && f.tema?.touched}"
             class="form-control is-invalid"
             formControlName="tema"
             placeholder="Insira o Tema"
           />
-          <div *ngIf="form.get('tema')?.hasError('required')" class="invalid-feedback">Tema é obrigatório</div>
-          <div *ngIf="form.get('tema')?.hasError('minlength')" class="invalid-feedback">Tema deve ter no mínimo 4 caracteres</div>
-          <div *ngIf="form.get('tema')?.hasError('maxlength')" class="invalid-feedback">Tema deve ter no máximo 50 catacteres</div>
+          <div *ngIf="f.tema?.hasError('required')" class="invalid-feedback">Tema é obrigatório</div>
+          <div *ngIf="f.tema?.hasError('minlength')" class="invalid-feedback">Tema deve ter no mínimo 4 caracteres</div>
+          <div *ngIf="f.tema?.hasError('maxlength')" class="invalid-feedback">Tema deve ter no máximo 50 catacteres</div>
         </div>
       </div>
       <div class="form-row">
