@@ -22,7 +22,12 @@
             }"
             placeholder="Insira o Primeiro nome"
           />
-          <div *ngIf="f.primeiroNome?.hasError('required')" class="invalid-feedback">Primeiro nome obrigatório.</div>
+          <div
+            *ngIf="f.primeiroNome?.hasError('required')"
+            class="invalid-feedback"
+          >
+            Primeiro nome obrigatório.
+          </div>
         </div>
         <div class="form-group col-sm-6">
           <label>Último nome</label>
@@ -35,7 +40,12 @@
             formControlName="ultimoNome"
             placeholder="Insira o Último nome"
           />
-          <div *ngIf="f.ultimoNome?.hasError('required')" class="invalid-feedback">Ultimo nome obrigatório.</div>
+          <div
+            *ngIf="f.ultimoNome?.hasError('required')"
+            class="invalid-feedback"
+          >
+            Ultimo nome obrigatório.
+          </div>
         </div>
       </div>
       <div class="form-group">
@@ -43,14 +53,16 @@
         <input
           class="form-control"
           type="text"
-          [ngClass]="{
-            'is-invalid': f.email?.errors && f.email?.touched
-          }"
+          [ngClass]="{ 'is-invalid': f.email?.errors && f.email?.touched }"
           formControlName="email"
           placeholder="Insira o Nome Completo"
         />
-        <div *ngIf="f.email?.hasError('required')" class="invalid-feedback">E-mail obrigatório.</div>
-        <div *ngIf="f.email?.hasError('email')" class="invalid-feedback">E-mail inválido.</div>
+        <div *ngIf="f.email?.hasError('required')" class="invalid-feedback">
+          E-mail obrigatório.
+        </div>
+        <div *ngIf="f.email?.hasError('email')" class="invalid-feedback">
+          E-mail inválido.
+        </div>
       </div>
       <div class="form-group">
         <label for="">Usuario:</label>
@@ -63,22 +75,26 @@
           formControlName="userName"
           placeholder="Insira o nome de Usuário"
         />
-        <div *ngIf="f.userName?.hasError('required')" class="invalid-feedback">Usuário obrigatório.</div>
+        <div *ngIf="f.userName?.hasError('required')" class="invalid-feedback">
+          Usuário obrigatório.
+        </div>
       </div>
       <div class="form-row">
         <div class="form-group col-sm-6">
           <label for="">Senha:</label>
           <input
             class="form-control"
-            [ngClass]="{
-              'is-invalid': f.senha?.errors && f.senha?.touched
-            }"
+            [ngClass]="{ 'is-invalid': f.senha?.errors && f.senha?.touched }"
             type="password"
             formControlName="senha"
             placeholder="Digite uma Senha"
           />
-          <div *ngIf="f.senha?.hasError('required')" class="invalid-feedback">Senha obrigatória.</div>
-          <div *ngIf="f.senha?.hasError('minlength')" class="invalid-feedback">Senha deve ter no mínimo 6 digitos.</div>
+          <div *ngIf="f.senha?.hasError('required')" class="invalid-feedback">
+            Senha obrigatória.
+          </div>
+          <div *ngIf="f.senha?.hasError('minlength')" class="invalid-feedback">
+            Senha deve ter no mínimo 6 digitos.
+          </div>
         </div>
         <div class="form-group col-sm-6">
           <label for="">Confirmar Senha:</label>
@@ -91,8 +107,18 @@
             formControlName="confirmeSenha"
             placeholder="Confirme a Senha"
           />
-          <div *ngIf="f.senha?.hasError('required')" class="invalid-feedback">Senha obrigatória.</div>
-          <div *ngIf="f.senha?.hasError('minlength')" class="invalid-feedback">Senha deve ter no mínimo 6 digitos.</div>
+          <div
+            *ngIf="f.confirmeSenha?.hasError('required')"
+            class="invalid-feedback"
+          >
+            Confirme senha obrigatória.
+          </div>
+          <div
+            *ngIf="f.confirmeSenha?.hasError('mustMatch')"
+            class="invalid-feedback"
+          >
+            As senhas devem ser iguais.
+          </div>
         </div>
       </div>
       <div class="form-row p-1 mb-3">
