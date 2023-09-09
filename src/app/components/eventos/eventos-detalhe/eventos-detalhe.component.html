@@ -6,14 +6,20 @@
           <label>Tema</label>
           <input
             type="text"
-            [ngClass]="{'is-invalid': f.tema?.errors && f.tema?.touched}"
-            class="form-control is-invalid"
+            [ngClass]="{ 'is-invalid': f.tema?.errors && f.tema?.touched }"
+            class="form-control"
             formControlName="tema"
             placeholder="Insira o Tema"
           />
-          <div *ngIf="f.tema?.hasError('required')" class="invalid-feedback">Tema é obrigatório</div>
-          <div *ngIf="f.tema?.hasError('minlength')" class="invalid-feedback">Tema deve ter no mínimo 4 caracteres</div>
-          <div *ngIf="f.tema?.hasError('maxlength')" class="invalid-feedback">Tema deve ter no máximo 50 catacteres</div>
+          <div *ngIf="f.tema?.hasError('required')" class="invalid-feedback">
+            Tema é obrigatório
+          </div>
+          <div *ngIf="f.tema?.hasError('minlength')" class="invalid-feedback">
+            Tema deve ter no mínimo 4 caracteres
+          </div>
+          <div *ngIf="f.tema?.hasError('maxlength')" class="invalid-feedback">
+            Tema deve ter no máximo 50 catacteres
+          </div>
         </div>
       </div>
       <div class="form-row">
@@ -21,7 +27,8 @@
           <label>Local</label>
           <input
             type="text"
-            class="form-control is-invalid"
+            [ngClass]="{ 'is-invalid': f.local?.errors && f.local?.touched }"
+            class="form-control"
             formControlName="local"
             placeholder=""
           />
@@ -31,7 +38,8 @@
           <label>Data e Hora</label>
           <input
             type="datetime"
-            class="form-control is-invalid"
+            [ngClass]="{ 'is-invalid': f.dataEvento?.errors && f.dataEvento?.touched }"
+            class="form-control"
             formControlName="dataEvento"
             placeholder=""
           />
@@ -43,17 +51,20 @@
           <label>Qtd Pessoas</label>
           <input
             type="text"
-            class="form-control is-invalid"
+            [ngClass]="{ 'is-invalid': f.qtdPessoas?.errors && f.qtdPessoas?.touched }"
+            class="form-control"
             formControlName="qtdPessoas"
             placeholder=""
           />
-          <div class="invalid-feedback">Qtd Pessoas é obrigatório</div>
+          <div *ngIf="f.qtdPessoas?.hasError('required')" class="invalid-feedback">Qtd Pessoas é obrigatório</div>
+          <div *ngIf="f.qtdPessoas?.hasError('max')" class="invalid-feedback">A Qtd Pessoas não pode ser maior que 120000.</div>
         </div>
         <div class="form-group col-md-2">
           <label>Telefone</label>
           <input
             type="text"
-            class="form-control is-invalid"
+            [ngClass]="{ 'is-invalid': f.telefone?.errors && f.telefone?.touched }"
+            class="form-control"
             formControlName="telefone"
             placeholder="(000) 90000-0000"
           />
@@ -63,17 +74,20 @@
           <label>Email</label>
           <input
             type="text"
-            class="form-control is-invalid"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': f.email?.errors && f.email?.touched }"
             formControlName="email"
             placeholder="e-mail"
           />
-          <div class="invalid-feedback">Email é obrigatório</div>
+          <div *ngIf="f.email?.hasError('required')" class="invalid-feedback">E-mail é obrigatório</div>
+          <div *ngIf="f.email?.hasError('email')" class="invalid-feedback">E-mail válido obrigatório</div>
         </div>
         <div class="form-group col-md-4">
           <label>Imagem</label>
           <input
             type="text"
-            class="form-control is-invalid"
+            [ngClass]="{ 'is-invalid': f.imagemURL?.errors && f.imagemURL?.touched }"
+            class="form-control"
             formControlName="imagemURL"
             placeholder="imagem"
           />
