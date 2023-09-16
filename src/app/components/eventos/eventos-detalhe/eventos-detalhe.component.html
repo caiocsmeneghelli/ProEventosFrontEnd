@@ -39,6 +39,8 @@
           <input
             type="datetime"
             [ngClass]="cssValidator(f.dataEvento)"
+            bsDatepicker
+            [bsConfig]="bsConfig"
             class="form-control"
             formControlName="dataEvento"
             placeholder=""
@@ -56,8 +58,15 @@
             formControlName="qtdPessoas"
             placeholder=""
           />
-          <div *ngIf="f.qtdPessoas?.hasError('required')" class="invalid-feedback">Qtd Pessoas é obrigatório</div>
-          <div *ngIf="f.qtdPessoas?.hasError('max')" class="invalid-feedback">A Qtd Pessoas não pode ser maior que 120000.</div>
+          <div
+            *ngIf="f.qtdPessoas?.hasError('required')"
+            class="invalid-feedback"
+          >
+            Qtd Pessoas é obrigatório
+          </div>
+          <div *ngIf="f.qtdPessoas?.hasError('max')" class="invalid-feedback">
+            A Qtd Pessoas não pode ser maior que 120000.
+          </div>
         </div>
         <div class="form-group col-md-2">
           <label>Telefone</label>
@@ -79,8 +88,12 @@
             formControlName="email"
             placeholder="e-mail"
           />
-          <div *ngIf="f.email?.hasError('required')" class="invalid-feedback">E-mail é obrigatório</div>
-          <div *ngIf="f.email?.hasError('email')" class="invalid-feedback">E-mail válido obrigatório</div>
+          <div *ngIf="f.email?.hasError('required')" class="invalid-feedback">
+            E-mail é obrigatório
+          </div>
+          <div *ngIf="f.email?.hasError('email')" class="invalid-feedback">
+            E-mail válido obrigatório
+          </div>
         </div>
         <div class="form-group col-md-4">
           <label>Imagem</label>
@@ -97,7 +110,10 @@
     </div>
     <div class="card-footer">
       <div class="d-flex">
-        <button class="btn btn-outline-secondary mr-auto border" (click)="resetForm()">
+        <button
+          class="btn btn-outline-secondary mr-auto border"
+          (click)="resetForm()"
+        >
           Cancelar Alteração
         </button>
         <button class="btn btn-success" [disabled]="!form.valid">

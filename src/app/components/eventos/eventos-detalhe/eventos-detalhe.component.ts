@@ -17,6 +17,16 @@ export class EventosDetalheComponent implements OnInit {
   get f():any{
     return this.form.controls;
   }
+
+  get bsConfig(): any{
+    return {
+      isAnimated: true,
+      adaptivePosition: true,
+      dateInputFormat: 'DD/MM/YYYY HH:mm',
+      containerClass: 'theme-default',
+      showWeekNumbers: false
+    }
+  }
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
