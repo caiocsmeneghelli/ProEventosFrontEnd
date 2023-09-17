@@ -14,6 +14,8 @@ import { EventoService } from '@app/services/evento.service';
 export class EventosListaComponent implements OnInit {
   public eventos: Evento[] = [];
   public eventosFiltrados: Evento[] = [];
+  public eventoId = 0;
+  public temaEvento = '';
 
   modalRef = {} as BsModalRef;
   larguraImg: number = 50;
@@ -72,7 +74,10 @@ export class EventosListaComponent implements OnInit {
     });
   }
 
-  openModal(template: TemplateRef<any>): void {
+  openModal(event: any, template: TemplateRef<any>, temaEvento:string): void {
+    event.stopPropagation();
+
+    this.temaEvento = temaEvento;
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
