@@ -9,7 +9,7 @@ import { EventoService } from '@app/services/evento.service';
 @Component({
   selector: 'app-eventos-lista',
   templateUrl: './eventos-lista.component.html',
-  styleUrls: ['./eventos-lista.component.scss']
+  styleUrls: ['./eventos-lista.component.scss'],
 })
 export class EventosListaComponent implements OnInit {
   public eventos: Evento[] = [];
@@ -67,14 +67,19 @@ export class EventosListaComponent implements OnInit {
         this.eventosFiltrados = response;
       },
       error: (error: any) => {
-        this.toastr.error("Erro ao buscar Eventos.", "Erro");
+        this.toastr.error('Erro ao buscar Eventos.', 'Erro');
         this.spinner.hide();
       },
       complete: () => this.spinner.hide(),
     });
   }
 
-  openModal(event: any, template: TemplateRef<any>, temaEvento:string, eventoId: number): void {
+  openModal(
+    event: any,
+    template: TemplateRef<any>,
+    temaEvento: string,
+    eventoId: number
+  ): void {
     event.stopPropagation();
 
     this.eventoId = eventoId;
@@ -87,28 +92,29 @@ export class EventosListaComponent implements OnInit {
     this.spinner.show();
 
     this.eventoService.deleteEvento(this.eventoId).subscribe(
-      (result: string) => {
-        if(result === 'Deletado'){
-          this.toastr.success('O Evento foi deletado com sucesso.', 'Deletado');
-          this.spinner.hide();
-          this.getEventos();
-        }
+      (result: any) => {
+        console.log(result);
+        this.toastr.success('O Evento foi deletado com sucesso.', 'Deletado');
+        this.spinner.hide();
+        this.getEventos();
       },
       (error: any) => {
         console.log(error);
-        this.toastr.error(`Erro ao tentar deletar o evento ${this.eventoId}`, 'Error');
+        this.toastr.error(
+          `Erro ao tentar deletar o evento ${this.eventoId}`,
+          'Error'
+        );
         this.spinner.hide();
       },
-      () => this.spinner.hide(),
+      () => this.spinner.hide()
     );
-
   }
 
   decline(): void {
     this.modalRef.hide();
   }
 
-  detalharEvento(id:number): void{
+  detalharEvento(id: number): void {
     this.router.navigate([`eventos/detalhe/${id}`]);
   }
 }
