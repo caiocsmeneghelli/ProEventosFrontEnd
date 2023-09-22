@@ -11,6 +11,7 @@ import { EventoService } from '@app/services/evento.service';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-eventos-detalhe',
@@ -20,7 +21,7 @@ import { ToastrService } from 'ngx-toastr';
 export class EventosDetalheComponent implements OnInit {
   form!: FormGroup;
   evento = {} as Evento;
-  estadoSalvar = 'post';
+  estadoSalvar = 'post' as string;
 
   get f(): any {
     return this.form.controls;
@@ -108,37 +109,29 @@ export class EventosDetalheComponent implements OnInit {
   public salvarAlteracao(): void {
     this.spinner.show();
     if (this.form.valid) {
+      let service = {} as Observable<Evento>;
+
       if (this.estadoSalvar === 'post') {
         this.evento = { ...this.form.value };
-        this.eventoService.postEvento(this.evento).subscribe(
-          () => {
-            this.toastr.success('Evento salvo com sucesso.', 'Sucesso');
-          },
-          (error: any) => {
-            console.error(error);
-            this.spinner.hide();
-            this.toastr.error('Erro ao salvar evento.', 'Erro');
-          },
-          () => {
-            this.spinner.hide();
-          }
-        );
+        service = this.eventoService.post(this.evento);
       } else {
         this.evento = { id: this.evento.id, ...this.form.value };
-        this.eventoService.putEvento(this.evento.id, this.evento).subscribe(
-          () => {
-            this.toastr.success('Evento salvo com sucesso.', 'Sucesso');
-          },
-          (error: any) => {
-            console.error(error);
-            this.spinner.hide();
-            this.toastr.error('Erro ao salvar evento.', 'Erro');
-          },
-          () => {
-            this.spinner.hide();
-          }
-        );
+        service = this.eventoService.put(this.evento);
       }
+
+      service.subscribe(
+        () => {
+          this.toastr.success('Evento salvo com sucesso.', 'Sucesso');
+        },
+        (error: any) => {
+          console.error(error);
+          this.spinner.hide();
+          this.toastr.error('Erro ao salvar evento.', 'Erro');
+        },
+        () => {
+          this.spinner.hide();
+        }
+      );
     }
   }
 }
