@@ -74,16 +74,34 @@ export class EventosListaComponent implements OnInit {
     });
   }
 
-  openModal(event: any, template: TemplateRef<any>, temaEvento:string): void {
+  openModal(event: any, template: TemplateRef<any>, temaEvento:string, eventoId: number): void {
     event.stopPropagation();
 
+    this.eventoId = eventoId;
     this.temaEvento = temaEvento;
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
   confirm(): void {
-    this.toastr.success('O Evento foi deletado com sucesso.', 'Deletado');
     this.modalRef.hide();
+    this.spinner.show();
+
+    this.eventoService.deleteEvento(this.eventoId).subscribe(
+      (result: string) => {
+        if(result === 'Deletado'){
+          this.toastr.success('O Evento foi deletado com sucesso.', 'Deletado');
+          this.spinner.hide();
+          this.getEventos();
+        }
+      },
+      (error: any) => {
+        console.log(error);
+        this.toastr.error(`Erro ao tentar deletar o evento ${this.eventoId}`, 'Error');
+        this.spinner.hide();
+      },
+      () => this.spinner.hide(),
+    );
+
   }
 
   decline(): void {
