@@ -40,7 +40,7 @@ export class EventosDetalheComponent implements OnInit {
     private router: ActivatedRoute,
     private eventoService: EventoService,
     private spinner: NgxSpinnerService,
-    private toaster: ToastrService
+    private toastr: ToastrService
   ) {
     this.localeService.use('pt-br');
   }
@@ -58,7 +58,7 @@ export class EventosDetalheComponent implements OnInit {
         },
         error: (error: any) => {
           console.error(error);
-          this.toaster.error('Erro ao tentar carregar evento.', 'Erro!')
+          this.toastr.error('Erro ao tentar carregar evento.', 'Erro!');
           this.spinner.hide();
         },
         complete: () => {
@@ -98,5 +98,26 @@ export class EventosDetalheComponent implements OnInit {
 
   public cssValidator(campoForm: FormControl): any {
     return { 'is-invalid': campoForm.errors && campoForm.touched };
+  }
+
+  public salvarAlteracao(): void {
+    this.spinner.show();
+    if (this.form.valid) {
+      this.evento = {... this.form.value};
+
+      this.eventoService.postEvento(this.evento).subscribe(
+        () => {
+          this.toastr.success('Evento salvo com sucesso.', 'Sucesso');
+        },
+        (error: any) => {
+          console.error(error);
+          this.spinner.hide();
+          this.toastr.error('Erro ao salvar evento.', 'Erro');
+        },
+        () => {
+          this.spinner.hide();
+        }
+      );
+    }
   }
 }
