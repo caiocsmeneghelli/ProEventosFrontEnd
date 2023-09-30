@@ -35,6 +35,9 @@ import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 
+import { EventoService } from './services/evento.service';
+import { LoteService } from './services/lote.service';
+
 defineLocale('pt-br', ptBrLocale);
 
 @NgModule({
@@ -75,6 +78,7 @@ defineLocale('pt-br', ptBrLocale);
     }),
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [EventoService, LoteService]
 })
 export class AppModule {}
