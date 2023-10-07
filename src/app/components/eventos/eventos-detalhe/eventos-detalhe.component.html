@@ -141,7 +141,7 @@
     <div class="form-row p-1">
       <div [formGroup]="form" class="col">
         <div formArrayName="lotes" *ngFor="let lote of lotes.controls; let i=index">
-          <fieldset class="form-group">
+          <fieldset [formGroupName]="i" class="form-group">
             <legend class="d-flex justify-content-between capitalize">
               <button
                 class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
@@ -158,6 +158,7 @@
               <div class="form-group col-md-4">
                 <label>Nome</label>
                 <input
+                  [ngClass]="cssValidator(lotes.get(i + '.nome'))"
                   type="text"
                   class="form-control"
                   formControlName="nome"
