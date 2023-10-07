@@ -168,6 +168,7 @@
               <div class="form-group col-md-4">
                 <label>Quantidade</label>
                 <input
+                [ngClass]="cssValidator(lotes.get(i + '.quantidade'))"
                   type="text"
                   class="form-control"
                   formControlName="quantidade"
@@ -177,6 +178,7 @@
               <div class="form-group col-md-4">
                 <label>Preço</label>
                 <input
+                  [ngClass]="cssValidator(lotes.get(i + '.preco'))"
                   type="text"
                   currencyMask
                   class="form-control"
@@ -187,6 +189,7 @@
               <div class="form-group col-md-4">
                 <label>Data Início</label>
                 <input
+                  [ngClass]="cssValidator(lotes.get(i + '.dataInicio'))"
                   type="text"
                   class="form-control"
                   formControlName="dataInicio"
@@ -196,6 +199,7 @@
               <div class="form-group col-md-4">
                 <label>Data Fim</label>
                 <input
+                  [ngClass]="cssValidator(lotes.get(i + '.dataFim'))"
                   type="text"
                   class="form-control"
                   formControlName="dataFim"
