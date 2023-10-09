@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Evento } from '@app/models/Evento';
 import { Lote } from '@app/models/Lote';
 import { EventoService } from '@app/services/evento.service';
+import { LoteService } from '@app/services/lote.service';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -24,6 +25,7 @@ import { Observable } from 'rxjs';
 export class EventosDetalheComponent implements OnInit {
   form!: FormGroup;
   evento = {} as Evento;
+  eventoId: number = 0;
   estadoSalvar = 'post' as string;
 
   get modoEditar() : boolean{
@@ -54,21 +56,23 @@ export class EventosDetalheComponent implements OnInit {
     private eventoService: EventoService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private loteService: LoteService
   ) {
     this.localeService.use('pt-br');
   }
 
   public carregarEvento(): void {
     const eventoIdParam = this.activatedRouter.snapshot.paramMap.get('id');
+    this.eventoId = eventoIdParam !== null ? +eventoIdParam : 0;
 
-    if (eventoIdParam !== null) {
+    if (this.eventoId !== 0) {
       this.spinner.show();
 
       this.estadoSalvar = 'put';
 
-      // +eventoIdParam -> transforma em number
-      this.eventoService.getEventoById(+eventoIdParam).subscribe({
+      // +this.eventoId -> transforma em number
+      this.eventoService.getEventoById(this.eventoId).subscribe({
         next: (evento: Evento) => {
           // this.evento = Object.assign({}, evento);
           this.evento = { ...evento };
@@ -134,7 +138,7 @@ export class EventosDetalheComponent implements OnInit {
     return { 'is-invalid': campoForm?.errors && campoForm?.touched };
   }
 
-  public salvarAlteracao(): void {
+  public salvarEvento(): void {
     this.spinner.show();
     if (this.form.valid) {
       let service = {} as Observable<Evento>;
@@ -150,7 +154,7 @@ export class EventosDetalheComponent implements OnInit {
       service.subscribe(
         (eventoRetorno: Evento) => {
           this.toastr.success('Evento salvo com sucesso.', 'Sucesso');
-          this.router.navigate([`eventos/detalhe/${eventoRetorno.id}`])
+          this.router.navigate([`eventos/detalhe/${eventoRetorno.id}`]);
         },
         (error: any) => {
           console.error(error);
@@ -161,6 +165,25 @@ export class EventosDetalheComponent implements OnInit {
           this.spinner.hide();
         }
       );
+    }
+  }
+
+  public salvarLotes(): void{
+    this.spinner.show();
+    if(this.form.controls['lotes'].valid){
+      console.log(this.form.value.lotes);
+      this.loteService.saveLotes(this.eventoId, this.form.value.lotes)
+      .subscribe(
+        () => {
+          this.toastr.success('Lotes salvos com Sucesso', 'Sucesso');
+          this.lotes.reset();
+        },
+        (error: any) => {
+          this.toastr.error('Error ao tentar salvar lotes.', 'Erro');
+          console.error(error);
+        }
+      ).add(() => this.spinner.hide());
+      this.spinner.hide();
     }
   }
 }

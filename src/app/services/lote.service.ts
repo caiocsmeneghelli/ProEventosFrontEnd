@@ -12,7 +12,7 @@ export class LoteService {
     return this.http.get<Lote[]>(`${this.baseUrl}/${eventoId}`);
   }
 
-  public saveLote(eventoId: number, lotes:Lote[]): Observable<Lote[]> {
+  public saveLotes(eventoId: number, lotes:Lote[]): Observable<Lote[]> {
     return this.http.put<Lote[]>(`${this.baseUrl}/${eventoId}`, lotes);
   }
 

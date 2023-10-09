@@ -120,7 +120,7 @@
         <button
           class="btn btn-success"
           [disabled]="!form.valid"
-          (click)="salvarAlteracao()"
+          (click)="salvarEvento()"
         >
           <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
           Salvar Evento
@@ -222,7 +222,7 @@
       <button class="btn btn-outline-secondary mr-auto border">
         Cancelar Alteração
       </button>
-      <button class="btn btn-success">Salvar Lotes</button>
+      <button (click)="salvarLotes()" class="btn btn-success">Salvar Lotes</button>
     </div>
   </div>
 </div>
