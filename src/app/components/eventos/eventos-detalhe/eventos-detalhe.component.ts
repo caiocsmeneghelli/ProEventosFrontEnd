@@ -7,7 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Evento } from '@app/models/Evento';
 import { Lote } from '@app/models/Lote';
 import { EventoService } from '@app/services/evento.service';
@@ -25,6 +25,10 @@ export class EventosDetalheComponent implements OnInit {
   form!: FormGroup;
   evento = {} as Evento;
   estadoSalvar = 'post' as string;
+
+  get modoEditar() : boolean{
+    return this.estadoSalvar === 'put';
+  }
 
   get lotes(): FormArray {
     return this.form.get('lotes') as FormArray;
@@ -46,16 +50,17 @@ export class EventosDetalheComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private localeService: BsLocaleService,
-    private router: ActivatedRoute,
+    private activatedRouter: ActivatedRoute,
     private eventoService: EventoService,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.localeService.use('pt-br');
   }
 
   public carregarEvento(): void {
-    const eventoIdParam = this.router.snapshot.paramMap.get('id');
+    const eventoIdParam = this.activatedRouter.snapshot.paramMap.get('id');
 
     if (eventoIdParam !== null) {
       this.spinner.show();
@@ -143,8 +148,9 @@ export class EventosDetalheComponent implements OnInit {
       }
 
       service.subscribe(
-        () => {
+        (eventoRetorno: Evento) => {
           this.toastr.success('Evento salvo com sucesso.', 'Sucesso');
+          this.router.navigate([`eventos/detalhe/${eventoRetorno.id}`])
         },
         (error: any) => {
           console.error(error);
