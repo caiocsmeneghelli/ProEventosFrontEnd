@@ -147,6 +147,7 @@
         >
           <fieldset [formGroupName]="i" class="form-group mb-4">
             <legend class="d-flex justify-content-between capitalize">
+              {{retornaTituloLote(lotes.get(i+'.nome')?.value)}}
               <button
                 (click)="removerLote(template, i)"
                 class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
@@ -186,6 +187,7 @@
                   [ngClass]="cssValidator(lotes.get(i + '.preco'))"
                   type="text"
                   currencyMask
+                  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align:'left' }"
                   class="form-control"
                   formControlName="preco"
                   placeholder="R$ 0,00"
@@ -199,7 +201,6 @@
                   class="form-control"
                   formControlName="dataInicio"
                   placeholder="01/01/2019"
-                  value="{{ lotes.get(i + '.dataInicio')?.value | date:'dd/MM/yyyy' }}"
                   bsDatepicker
                   [bsConfig]="bsConfigLote"
                 />
@@ -212,7 +213,6 @@
                   class="form-control"
                   formControlName="dataFim"
                   placeholder="01/01/2019"
-                  value="{{ lotes.get(i + '.dataFim')?.value | date:'dd/MM/yyyy' }}"
                   bsDatepicker
                   [bsConfig]="bsConfigLote"
                 />
@@ -254,7 +254,11 @@
       <button class="btn btn-outline-secondary m-2 border">
         Cancelar Alteração
       </button>
-      <button (click)="salvarLotes()" [disabled]="!form.controls['lotes'].valid" class="btn btn-success m-2">
+      <button
+        (click)="salvarLotes()"
+        [disabled]="!form.controls['lotes'].valid"
+        class="btn btn-success m-2"
+      >
         Salvar Lotes
       </button>
     </div>
