@@ -1,7 +1,7 @@
 <div class="card rounded shadow-sm">
   <form [formGroup]="form">
     <div class="p-3">
-      <div class="form-row">
+      <div class="row">
         <div class="form-group col-md-12">
           <label>Tema</label>
           <input
@@ -22,7 +22,7 @@
           </div>
         </div>
       </div>
-      <div class="form-row">
+      <div class="row">
         <div class="form-group col-md-8">
           <label>Local</label>
           <input
@@ -49,7 +49,7 @@
           <div class="invalid-feedback">Data e Hora é obrigatório</div>
         </div>
       </div>
-      <div class="form-row">
+      <div class="row">
         <div class="form-group col-md-2">
           <label>Qtd Pessoas</label>
           <input
@@ -110,7 +110,7 @@
       </div>
     </div>
     <div class="card-footer">
-      <div class="d-flex">
+      <div class="d-flex justify-content-between">
         <button
           class="btn btn-outline-secondary mr-auto border"
           (click)="resetForm()"
@@ -142,7 +142,7 @@
     <div class="form-row p-1">
       <div [formGroup]="form" class="col">
         <div formArrayName="lotes" *ngFor="let lote of lotes.controls; let i=index">
-          <fieldset [formGroupName]="i" class="form-group">
+          <fieldset [formGroupName]="i" class="form-group mb-4">
             <legend class="d-flex justify-content-between capitalize">
               <button
                 class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
@@ -218,11 +218,11 @@
     </button>
   </div>
   <div class="card-footer">
-    <div class="d-flex">
-      <button class="btn btn-outline-secondary mr-auto border">
+    <div class="d-flex d-flex justify-content-between">
+      <button class="btn btn-outline-secondary m-2 border">
         Cancelar Alteração
       </button>
-      <button (click)="salvarLotes()" class="btn btn-success">Salvar Lotes</button>
+      <button (click)="salvarLotes()" class="btn btn-success m-2">Salvar Lotes</button>
     </div>
   </div>
 </div>

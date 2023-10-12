@@ -77,17 +77,39 @@ export class EventosDetalheComponent implements OnInit {
           // this.evento = Object.assign({}, evento);
           this.evento = { ...evento };
           this.form.patchValue(this.evento);
+          // this.carregarLotes();
+          this.renderLotes(this.evento);
         },
         error: (error: any) => {
           console.error(error);
           this.toastr.error('Erro ao tentar carregar evento.', 'Erro!');
-          this.spinner.hide();
         },
-        complete: () => {
-          this.spinner.hide();
-        },
-      });
+        // complete: () => {
+        //   this.spinner.hide();
+        // },
+      }).add(() => this.spinner.hide());
     }
+  }
+
+  // forma de fazer buscando no backend
+  public carregarLotes() : void{
+    this.loteService.getLotesByEventoId(this.eventoId).subscribe(
+      (lotesRetorno: Lote[]) => {
+        lotesRetorno.forEach(lote => {
+          this.lotes.push(this.criarLote(lote));
+        });
+      },
+      (error: any) => {
+        this.toastr.error('Erro ao tentar buscar lotes', 'Erro');
+        console.log(error);
+      }
+    ).add(() => this.spinner.hide());
+  }
+
+  public renderLotes(evento: Evento){
+    evento.lotes.forEach(lote => {
+      this.lotes.push(this.criarLote(lote));
+    });
   }
 
   ngOnInit(): void {
@@ -171,7 +193,6 @@ export class EventosDetalheComponent implements OnInit {
   public salvarLotes(): void{
     this.spinner.show();
     if(this.form.controls['lotes'].valid){
-      console.log(this.form.value.lotes);
       this.loteService.saveLotes(this.eventoId, this.form.value.lotes)
       .subscribe(
         () => {
