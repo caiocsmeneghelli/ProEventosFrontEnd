@@ -30,7 +30,8 @@ export class EventosDetalheComponent implements OnInit {
   eventoId: number = 0;
   estadoSalvar = 'post' as string;
   loteAtual = {id: 0, nome: "", index: 0};
-  imagemUrl = 'assets/img/upload.jpg'
+  imagemUrl = 'assets/img/upload.jpg';
+  file!: File;
 
   get modoEditar() : boolean{
     return this.estadoSalvar === 'put';
@@ -261,5 +262,12 @@ export class EventosDetalheComponent implements OnInit {
       : control;
   }
 
+  public onFileChange(ev: any): void{
+    const reader = new FileReader();
 
+    reader.onload = (event:any ) => this.imagemUrl = event.target.result;
+
+    this.file = ev.target.files[0];
+    reader.readAsDataURL(this.file);
+  }
 }
