@@ -269,5 +269,22 @@ export class EventosDetalheComponent implements OnInit {
 
     this.file = ev.target.files[0];
     reader.readAsDataURL(this.file);
+
+    this.uploadImagem();
+  }
+
+  private uploadImagem(): void{
+    this.spinner.show();
+
+    this.eventoService.postUpload(this.eventoId, this.file).subscribe(
+      () => {
+        this.carregarEvento();
+        this.toastr.success('Imagem atualizada.', "Sucesso");
+      },
+      (erro: any) => {
+        this.toastr.error("Erro ao atualizar imagem.", "Erro");
+        console.log(erro);
+      },
+    ).add(() => this.spinner.hide());
   }
 }
