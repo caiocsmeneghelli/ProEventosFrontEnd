@@ -30,6 +30,7 @@ export class EventosDetalheComponent implements OnInit {
   eventoId: number = 0;
   estadoSalvar = 'post' as string;
   loteAtual = {id: 0, nome: "", index: 0};
+  imagemUrl = 'assets/img/upload.jpg'
 
   get modoEditar() : boolean{
     return this.estadoSalvar === 'put';
@@ -259,4 +260,6 @@ export class EventosDetalheComponent implements OnInit {
     return control === null || control === '' ? 'Nome do Lote'
       : control;
   }
+
+
 }
