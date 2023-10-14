@@ -71,7 +71,7 @@
                 A Qtd Pessoas não pode ser maior que 120000.
               </div>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-4">
               <label>Telefone</label>
               <input
                 type="text"
@@ -82,7 +82,7 @@
               />
               <div class="invalid-feedback">Telefone é obrigatório</div>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label>Email</label>
               <input
                 type="text"
@@ -97,17 +97,6 @@
               <div *ngIf="f.email?.hasError('email')" class="invalid-feedback">
                 E-mail válido obrigatório
               </div>
-            </div>
-            <div class="form-group col-md-4">
-              <label>Imagem</label>
-              <input
-                type="text"
-                [ngClass]="cssValidator(f.imagemURL)"
-                class="form-control"
-                formControlName="imagemURL"
-                placeholder="imagem"
-              />
-              <div class="invalid-feedback">Imagem é obrigatório</div>
             </div>
           </div>
         </div>

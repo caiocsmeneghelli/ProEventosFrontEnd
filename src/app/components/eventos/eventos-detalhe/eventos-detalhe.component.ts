@@ -154,7 +154,7 @@ export class EventosDetalheComponent implements OnInit {
       qtdPessoas: ['', [Validators.required, Validators.max(120000)]],
       telefone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      imagemURL: ['', Validators.required],
+      imagemURL: [''],
       lotes: this.formBuilder.array([]),
     });
   }
@@ -292,4 +292,6 @@ export class EventosDetalheComponent implements OnInit {
       },
     ).add(() => this.spinner.hide());
   }
+
+
 }
