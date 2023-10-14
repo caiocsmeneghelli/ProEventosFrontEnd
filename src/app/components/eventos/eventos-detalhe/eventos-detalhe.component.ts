@@ -12,6 +12,7 @@ import { Evento } from '@app/models/Evento';
 import { Lote } from '@app/models/Lote';
 import { EventoService } from '@app/services/evento.service';
 import { LoteService } from '@app/services/lote.service';
+import { environment } from '@enviroments/environment';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -95,6 +96,10 @@ export class EventosDetalheComponent implements OnInit {
           this.evento = { ...evento };
           this.form.patchValue(this.evento);
           // this.carregarLotes();
+
+          if(this.evento.imagemURL != ''){
+            this.imagemUrl = environment.apiURL + 'resources/images/' + this.evento.imagemURL;
+          }
           this.renderLotes(this.evento);
         },
         error: (error: any) => {

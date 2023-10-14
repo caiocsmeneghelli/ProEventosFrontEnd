@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Evento } from '../models/Evento';
+import { environment } from '@enviroments/environment';
 
 @Injectable()
 
 export class EventoService {
   constructor(private http: HttpClient) {}
 
-  baseUrl = 'https://localhost:7047/api/evento';
+  baseUrl = environment.apiURL + 'api/evento';
   public getEventos(): Observable<Evento[]> {
     return this.http.get<Evento[]>(this.baseUrl);
   }
