@@ -10,35 +10,45 @@ export class EventoService {
 
   baseUrl = environment.apiURL + 'api/evento';
   localStorageString = localStorage.getItem('user') as string;
-  arr = this.localStorageString != "" ? JSON.parse(this.localStorageString) : "";
-  token = this.arr != null ? this.arr.token : "";
+  arr =
+    this.localStorageString != '' ? JSON.parse(this.localStorageString) : '';
+  token = this.arr != null ? this.arr.token : '';
   tokenHeader = new HttpHeaders({
     Authorization: `Bearer ${this.token}`,
   });
 
   public getEventos(): Observable<Evento[]> {
-    console.log(this.tokenHeader);
     return this.http.get<Evento[]>(this.baseUrl, { headers: this.tokenHeader });
   }
 
   public getEventosByTema(tema: string): Observable<Evento[]> {
-    return this.http.get<Evento[]>(`${this.baseUrl}/tema/${tema}`);
+    return this.http.get<Evento[]>(`${this.baseUrl}/tema/${tema}`, {
+      headers: this.tokenHeader,
+    });
   }
 
   public getEventoById(id: number): Observable<Evento> {
-    return this.http.get<Evento>(`${this.baseUrl}/${id}`);
+    return this.http.get<Evento>(`${this.baseUrl}/${id}`, {
+      headers: this.tokenHeader,
+    });
   }
 
   public post(evento: Evento): Observable<Evento> {
-    return this.http.post<Evento>(this.baseUrl, evento);
+    return this.http.post<Evento>(this.baseUrl, evento, {
+      headers: this.tokenHeader,
+    });
   }
 
   public put(evento: Evento): Observable<Evento> {
-    return this.http.put<Evento>(`${this.baseUrl}/${evento.id}`, evento);
+    return this.http.put<Evento>(`${this.baseUrl}/${evento.id}`, evento, {
+      headers: this.tokenHeader,
+    });
   }
 
   public deleteEvento(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/${id}`);
+    return this.http.delete<any>(`${this.baseUrl}/${id}`, {
+      headers: this.tokenHeader,
+    });
   }
 
   public postUpload(eventoId: number, file: File): Observable<Evento> {
@@ -48,7 +58,8 @@ export class EventoService {
 
     return this.http.post<Evento>(
       `${this.baseUrl}/upload-image/${eventoId}`,
-      formData
+      formData,
+      { headers: this.tokenHeader }
     );
   }
 }
