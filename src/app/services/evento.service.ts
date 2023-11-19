@@ -9,12 +9,15 @@ export class EventoService {
   constructor(private http: HttpClient) {}
 
   baseUrl = environment.apiURL + 'api/evento';
+  localStorageString = localStorage.getItem('user') as string;
+  arr = this.localStorageString != "" ? JSON.parse(this.localStorageString) : "";
+  token = this.arr != null ? this.arr.token : "";
   tokenHeader = new HttpHeaders({
-    Authorization:
-      'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyIiwidW5pcXVlX25hbWUiOiJjYWlvY3NtZW5lZ2hlbGxpIiwibmJmIjoxNzAwMzM2OTIxLCJleHAiOjE3MDA0MjMzMjAsImlhdCI6MTcwMDMzNjkyMX0.7TkjGs_4VuFkxE7MFWOnBUD0pArGAXXJ24-LAHJa-pB0Kl2TRD1YHVIP40oAQXVwDSdCYDDhiZxsNB3c4mP-eA',
+    Authorization: `Bearer ${this.token}`,
   });
 
   public getEventos(): Observable<Evento[]> {
+    console.log(this.tokenHeader);
     return this.http.get<Evento[]>(this.baseUrl, { headers: this.tokenHeader });
   }
 

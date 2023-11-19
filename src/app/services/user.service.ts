@@ -1,7 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '@app/models/Identity/user';
+import { User } from '@app/models/Identity/User';
 import { environment } from '@enviroments/environment';
 import { Observable, ReplaySubject, map, take } from 'rxjs';
 
@@ -31,6 +31,18 @@ export class UserService {
     localStorage.removeItem('user');
     this.currentUserSource.next(null as any);
     this.currentUserSource.complete();
+  }
+
+  public register(model: any): Observable<void>{
+    return this.http.post<User>(this.baseUrl + 'register', model).pipe(
+      take(1),
+      map((response: User) => {
+        const user = response;
+        if(user){
+          this.setCurrentUser(user);
+        }
+      })
+    )
   }
 
   public setCurrentUser(user: User): void{

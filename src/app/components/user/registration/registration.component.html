@@ -6,7 +6,7 @@
     </div>
   </div>
   <div class="col-md-6">
-    <form class="p-1" [formGroup]="form">
+    <form class="p-1" [formGroup]="form" (ngSubmit)="register()">
       <div class="pb-2 d-block d-md-none">
         <h3 class="border-bottom">Cadastro de Usuário</h3>
       </div>
@@ -84,15 +84,15 @@
           <label for="">Senha:</label>
           <input
             class="form-control"
-            [ngClass]="{ 'is-invalid': f.senha?.errors && f.senha?.touched }"
+            [ngClass]="{ 'is-invalid': f.password.errors && f.password.touched }"
             type="password"
-            formControlName="senha"
+            formControlName="password"
             placeholder="Digite uma Senha"
           />
-          <div *ngIf="f.senha?.hasError('required')" class="invalid-feedback">
+          <div *ngIf="f.password.hasError('required')" class="invalid-feedback">
             Senha obrigatória.
           </div>
-          <div *ngIf="f.senha?.hasError('minlength')" class="invalid-feedback">
+          <div *ngIf="f.password?.hasError('minlength')" class="invalid-feedback">
             Senha deve ter no mínimo 6 digitos.
           </div>
         </div>
@@ -102,19 +102,19 @@
             class="form-control"
             type="password"
             [ngClass]="{
-              'is-invalid': f.confirmeSenha?.errors && f.confirmeSenha?.touched
+              'is-invalid': f.confirmePassword?.errors && f.confirmePassword?.touched
             }"
-            formControlName="confirmeSenha"
+            formControlName="confirmePassword"
             placeholder="Confirme a Senha"
           />
           <div
-            *ngIf="f.confirmeSenha?.hasError('required')"
+            *ngIf="f.confirmePassword?.hasError('required')"
             class="invalid-feedback"
           >
             Confirme senha obrigatória.
           </div>
           <div
-            *ngIf="f.confirmeSenha?.hasError('mustMatch')"
+            *ngIf="f.confirmePassword?.hasError('mustMatch')"
             class="invalid-feedback"
           >
             As senhas devem ser iguais.
@@ -135,8 +135,8 @@
       </div>
       <div class="form-row">
         <div class="form-group col-12">
-          <button class="btn btn-lg btn-success btn-block px-5">
-            Registar
+          <button [disabled]="form.invalid" class="btn btn-lg btn-success btn-block px-5" type="submit">
+            Registrar
           </button>
         </div>
       </div>
