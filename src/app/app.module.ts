@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -8,13 +8,13 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import {defineLocale} from 'ngx-bootstrap/chronos';
-import {ptBrLocale} from 'ngx-bootstrap/locale';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
 
-import { NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule } from 'ngx-currency';
 import { ToastrModule } from 'ngx-toastr';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppComponent } from './app.component';
 import { EventosComponent } from './components/eventos/eventos.component';
@@ -36,6 +36,9 @@ import { RegistrationComponent } from './components/user/registration/registrati
 
 import { EventoService } from './services/evento.service';
 import { LoteService } from './services/lote.service';
+import { UserService } from './services/user.service';
+
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -79,6 +82,11 @@ defineLocale('pt-br', ptBrLocale);
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [EventoService, LoteService]
+  providers: [
+    EventoService,
+    LoteService,
+    UserService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
 })
 export class AppModule {}

@@ -9,46 +9,36 @@ export class EventoService {
   constructor(private http: HttpClient) {}
 
   baseUrl = environment.apiURL + 'api/evento';
-  localStorageString = localStorage.getItem('user') as string;
-  arr =
-    this.localStorageString != '' ? JSON.parse(this.localStorageString) : '';
-  token = this.arr != null ? this.arr.token : '';
-  tokenHeader = new HttpHeaders({
-    Authorization: `Bearer ${this.token}`,
-  });
+  // localStorageString = localStorage.getItem('user') as string;
+  // arr =
+  //   this.localStorageString != '' ? JSON.parse(this.localStorageString) : '';
+  // token = this.arr != null ? this.arr.token : '';
+  // tokenHeader = new HttpHeaders({
+  //   Authorization: `Bearer ${this.token}`,
+  // });
 
   public getEventos(): Observable<Evento[]> {
-    return this.http.get<Evento[]>(this.baseUrl, { headers: this.tokenHeader });
+    return this.http.get<Evento[]>(this.baseUrl);
   }
 
   public getEventosByTema(tema: string): Observable<Evento[]> {
-    return this.http.get<Evento[]>(`${this.baseUrl}/tema/${tema}`, {
-      headers: this.tokenHeader,
-    });
+    return this.http.get<Evento[]>(`${this.baseUrl}/tema/${tema}`);
   }
 
   public getEventoById(id: number): Observable<Evento> {
-    return this.http.get<Evento>(`${this.baseUrl}/${id}`, {
-      headers: this.tokenHeader,
-    });
+    return this.http.get<Evento>(`${this.baseUrl}/${id}`);
   }
 
   public post(evento: Evento): Observable<Evento> {
-    return this.http.post<Evento>(this.baseUrl, evento, {
-      headers: this.tokenHeader,
-    });
+    return this.http.post<Evento>(this.baseUrl, evento);
   }
 
   public put(evento: Evento): Observable<Evento> {
-    return this.http.put<Evento>(`${this.baseUrl}/${evento.id}`, evento, {
-      headers: this.tokenHeader,
-    });
+    return this.http.put<Evento>(`${this.baseUrl}/${evento.id}`, evento);
   }
 
   public deleteEvento(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/${id}`, {
-      headers: this.tokenHeader,
-    });
+    return this.http.delete<any>(`${this.baseUrl}/${id}`);
   }
 
   public postUpload(eventoId: number, file: File): Observable<Evento> {
@@ -58,8 +48,7 @@ export class EventoService {
 
     return this.http.post<Evento>(
       `${this.baseUrl}/upload-image/${eventoId}`,
-      formData,
-      { headers: this.tokenHeader }
+      formData
     );
   }
 }
