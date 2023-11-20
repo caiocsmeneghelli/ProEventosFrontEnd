@@ -28,7 +28,6 @@ export class UserService {
   public logout(): void{
     localStorage.removeItem('user');
     this.currentUserSource.next(null as any);
-    this.currentUserSource.complete();
   }
 
   public register(model: any): Observable<void>{
@@ -46,7 +45,6 @@ export class UserService {
   public setCurrentUser(user: User): void{
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
-    this.currentUserSource.complete();
   }
 
   public getUser() : User{
