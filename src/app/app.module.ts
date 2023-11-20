@@ -39,6 +39,7 @@ import { LoteService } from './services/lote.service';
 import { UserService } from './services/user.service';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { HomeComponent } from './components/home/home.component';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -58,6 +59,7 @@ defineLocale('pt-br', ptBrLocale);
     UserComponent,
     LoginComponent,
     RegistrationComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
