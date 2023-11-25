@@ -2,6 +2,7 @@ import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '@app/models/Identity/User';
+import { UserUpdate } from '@app/models/Identity/UserUpdate';
 import { environment } from '@enviroments/environment';
 import { Observable, ReplaySubject, map, take } from 'rxjs';
 
@@ -25,30 +26,38 @@ export class UserService {
     );
   }
 
-  public logout(): void{
+  public logout(): void {
     localStorage.removeItem('user');
     this.currentUserSource.next(null as any);
   }
 
-  public register(model: any): Observable<void>{
+  public register(model: any): Observable<void> {
     return this.http.post<User>(this.baseUrl + 'register', model).pipe(
       take(1),
       map((response: User) => {
         const user = response;
-        if(user){
+        if (user) {
           this.setCurrentUser(user);
         }
       })
-    )
+    );
   }
 
-  public setCurrentUser(user: User): void{
+  public setCurrentUser(user: User): void {
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
 
-  public getUser() : User{
-    const user = JSON.parse(localStorage.getItem('user')!) as User;
-    return user;
+  public getUser(): Observable<UserUpdate> {
+    return this.http.get<UserUpdate>(this.baseUrl + 'getUser').pipe(take(1));
+  }
+
+  public updateUser(model: UserUpdate): Observable<void> {
+    return this.http.put<UserUpdate>(this.baseUrl + 'updateUser', model).pipe(
+      take(1),
+      map((user: UserUpdate) => {
+        this.setCurrentUser(user);
+      })
+    );
   }
 }
