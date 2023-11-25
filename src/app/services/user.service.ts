@@ -53,7 +53,7 @@ export class UserService {
   }
 
   public updateUser(model: UserUpdate): Observable<void> {
-    return this.http.put<UserUpdate>(this.baseUrl + 'updateUser', model).pipe(
+    return this.http.put<UserUpdate>(this.baseUrl + 'update', model).pipe(
       take(1),
       map((user: UserUpdate) => {
         this.setCurrentUser(user);

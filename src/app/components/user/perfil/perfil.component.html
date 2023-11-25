@@ -54,14 +54,14 @@
               [ngClass]="{ 'is-invalid': f.titulo.errors && f.titulo.touched }"
             >
               <option value=""></option>
-              <option value="0">Não Quero</option>
-              <option value="Senhorita">Tecnólogo(a)</option>
-              <option value="Senhorita">Bacharel</option>
-              <option value="Senhorita">Especialista</option>
-              <option value="Senhorita">Pós Graduado(a)</option>
-              <option value="Senhorita">Mestre</option>
-              <option value="Senhorita">Doutor(a)</option>
-              <option value="Senhorita">Pós Doc</option>
+              <option value="NaoInformado">Não Quero</option>
+              <option value="Tecnologo">Tecnólogo(a)</option>
+              <option value="Bacharel">Bacharel</option>
+              <option value="Especialista">Especialista</option>
+              <option value="PosGraduado">Pós Graduado(a)</option>
+              <option value="Mestrado">Mestre</option>
+              <option value="Doutorado">Doutor(a)</option>
+              <option value="PosDoutorado">Pós Doc</option>
             </select>
             <div
               *ngIf="f.titulo.errors && f.titulo.touched"
@@ -155,6 +155,7 @@
               [ngClass]="{ 'is-invalid': f.funcao.errors && f.funcao.touched }"
             >
               <option value=""></option>
+              <option value="NaoInformado">Não Informado</option>
               <option value="Participante">Participante</option>
               <option value="Palestrante">Palestrante</option>
             </select>
@@ -243,7 +244,7 @@
         >
           Cancelar Alteração
         </button>
-        <button class="btn btn-success">Salvar Alteração</button>
+        <button class="btn btn-success" type="submit">Salvar Alteração</button>
       </div>
     </div>
   </form>

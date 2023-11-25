@@ -61,13 +61,14 @@ export class PerfilComponent implements OnInit {
 
     this.form = this.fb.group(
       {
-        titulo: ['', Validators.required],
+        userName: [''],
+        titulo: ['NaoInformado', Validators.required],
         primeiroNome: ['', Validators.required],
         ultimoNome: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         telefone: ['', [Validators.required]],
         descricao: ['', Validators.required],
-        funcao: ['', Validators.required],
+        funcao: ['NaoInformado', Validators.required],
         password: ['', [Validators.minLength(6), Validators.nullValidator]],
         confirmePassword: ['', Validators.nullValidator],
       },
@@ -81,10 +82,21 @@ export class PerfilComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // Vai parar aqui se o form estiver inválido
-    if (this.form.invalid) {
-      return;
-    }
+    this.atualizarUsuario();
+  }
+
+  public atualizarUsuario() {
+    this.userUpdate = {...this.form.value};
+    this.spinner.show();
+
+    this.userService.updateUser(this.userUpdate).subscribe(
+      () => this.toastr.success('Usuário atualizado!'),
+      (error) => {
+        this.toastr.error(error.error);
+        console.error(error);
+      },
+      () => {this.spinner.hide()}
+    );
   }
 
   public resetForm(event: any): void {
