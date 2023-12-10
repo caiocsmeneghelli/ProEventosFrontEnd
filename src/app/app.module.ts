@@ -83,7 +83,6 @@ defineLocale('pt-br', ptBrLocale);
     }),
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     EventoService,
     LoteService,
