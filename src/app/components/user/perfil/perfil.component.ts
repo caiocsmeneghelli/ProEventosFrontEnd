@@ -66,7 +66,7 @@ export class PerfilComponent implements OnInit {
         primeiroNome: ['', Validators.required],
         ultimoNome: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        telefone: ['', [Validators.required]],
+        phoneNumber: ['', [Validators.required]],
         descricao: ['', Validators.required],
         funcao: ['NaoInformado', Validators.required],
         password: ['', [Validators.minLength(6), Validators.nullValidator]],
