@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Evento } from '@app/models/Evento';
 import { EventoService } from '@app/services/evento.service';
 import { environment } from '@enviroments/environment';
+import { Pagination, PaginationResult } from '@app/models/Pagination';
 
 @Component({
   selector: 'app-eventos-lista',
@@ -17,6 +18,7 @@ export class EventosListaComponent implements OnInit {
   public eventosFiltrados: Evento[] = [];
   public eventoId = 0;
   public temaEvento = '';
+  public pagination = {} as Pagination;
 
   modalRef = {} as BsModalRef;
   larguraImg: number = 100;
@@ -53,7 +55,7 @@ export class EventosListaComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.spinner.show();
+    this.pagination = {currentPage: 1, itemsPerPage: 4, totalItems: 10} as Pagination;
     this.getEventos();
   }
 
@@ -69,17 +71,20 @@ export class EventosListaComponent implements OnInit {
   }
 
   public getEventos(): void {
-    this.eventoService.getEventos().subscribe({
-      next: (response: Evento[]) => {
-        this.eventos = response;
-        this.eventosFiltrados = response;
+    this.spinner.show();
+    this.eventoService.getEventos(this.pagination.currentPage,
+      this.pagination.itemsPerPage).subscribe({
+      next: (response: PaginationResult<Evento[]>) => {
+        this.eventos = response.result;
+        this.eventosFiltrados = this.eventos;
+        this.pagination = response.pagination;
+        console.log(this.pagination);
       },
       error: (error: any) => {
         this.toastr.error('Erro ao buscar Eventos.', 'Erro');
         this.spinner.hide();
       },
-      complete: () => this.spinner.hide(),
-    });
+    }).add(() => this.spinner.hide());
   }
 
   openModal(
@@ -93,6 +98,11 @@ export class EventosListaComponent implements OnInit {
     this.eventoId = eventoId;
     this.temaEvento = temaEvento;
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+  }
+
+  public pageChanged(event: any) : void{
+    this.pagination.currentPage = event.page;
+    this.getEventos();
   }
 
   confirm(): void {
