@@ -7,6 +7,7 @@ import { Evento } from '@app/models/Evento';
 import { EventoService } from '@app/services/evento.service';
 import { environment } from '@enviroments/environment';
 import { Pagination, PaginationResult } from '@app/models/Pagination';
+import { Subject, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-eventos-lista',
@@ -16,7 +17,6 @@ import { Pagination, PaginationResult } from '@app/models/Pagination';
 export class EventosListaComponent implements OnInit {
   public eventos: Evento[] = [];
   public eventoId = 0;
-  public temaEvento = '';
   public pagination = {} as Pagination;
 
   modalRef = {} as BsModalRef;
@@ -25,22 +25,34 @@ export class EventosListaComponent implements OnInit {
   mostrarImg: boolean = true;
   exibirImg: boolean = true;
 
+  termoBuscaChanged: Subject<string> = new Subject<string>();
+
   public filtrarEventos(evt: any): void {
-    this.eventoService.getEventos(
-      this.pagination.currentPage,
-      this.pagination.itemsPerPage,
-      evt.value
-    ).subscribe({
-      next: (response: PaginationResult<Evento[]>) => {
-        this.eventos = response.result;
-        this.pagination = response.pagination;
-      },
-      error: (error: any) => {
-        this.toastr.error('Erro ao buscar Eventos.', 'Erro');
-        this.spinner.hide();
-      },
-    })
-    .add(() => this.spinner.hide());
+    if (this.termoBuscaChanged.observers.length === 0) {
+      this.termoBuscaChanged
+      .pipe(debounceTime(5000))
+      .subscribe((filtrarPor) => {
+          this.spinner.show();
+          this.eventoService
+            .getEventos(
+              this.pagination.currentPage,
+              this.pagination.itemsPerPage,
+              filtrarPor
+            )
+            .subscribe({
+              next: (response: PaginationResult<Evento[]>) => {
+                this.eventos = response.result;
+                this.pagination = response.pagination;
+              },
+              error: (error: any) => {
+                this.toastr.error('Erro ao buscar Eventos.', 'Erro');
+                this.spinner.hide();
+              },
+            })
+            .add(() => this.spinner.hide());
+        });
+        this.termoBuscaChanged.next(evt.value);
+    }
   }
 
   constructor(
@@ -55,8 +67,9 @@ export class EventosListaComponent implements OnInit {
     this.pagination = {
       currentPage: 1,
       itemsPerPage: 4,
-      totalItems: 10,
+      totalItems: 1,
     } as Pagination;
+
     this.getEventos();
   }
 
@@ -73,13 +86,13 @@ export class EventosListaComponent implements OnInit {
 
   public getEventos(): void {
     this.spinner.show();
+
     this.eventoService
       .getEventos(this.pagination.currentPage, this.pagination.itemsPerPage)
       .subscribe({
         next: (response: PaginationResult<Evento[]>) => {
           this.eventos = response.result;
           this.pagination = response.pagination;
-          console.log(this.pagination);
         },
         error: (error: any) => {
           this.toastr.error('Erro ao buscar Eventos.', 'Erro');
@@ -98,7 +111,6 @@ export class EventosListaComponent implements OnInit {
     event.stopPropagation();
 
     this.eventoId = eventoId;
-    this.temaEvento = temaEvento;
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
