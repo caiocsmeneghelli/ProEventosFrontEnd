@@ -8,7 +8,7 @@
           type="text"
           class="form-control mr-2"
           placeholder="Buscar por Tema e Local"
-          [(ngModel)]="filtroLista"
+          (input)="filtrarEventos($event.target)"
         />
       </div>
     </div>
@@ -19,7 +19,6 @@
       </a>
     </div>
   </div>
-  <!-- <h3>Filtro: {{ filtroLista }}</h3> -->
   <table class="table table-striped table-hover">
     <thead class="table-dark">
       <tr>

@@ -15,7 +15,6 @@ import { Pagination, PaginationResult } from '@app/models/Pagination';
 })
 export class EventosListaComponent implements OnInit {
   public eventos: Evento[] = [];
-  public eventosFiltrados: Evento[] = [];
   public eventoId = 0;
   public temaEvento = '';
   public pagination = {} as Pagination;
@@ -26,24 +25,22 @@ export class EventosListaComponent implements OnInit {
   mostrarImg: boolean = true;
   exibirImg: boolean = true;
 
-  private _filtroLista: string = '';
-
-  public get filtroLista() {
-    return this._filtroLista;
-  }
-  public set filtroLista(value: string) {
-    this._filtroLista = value;
-    this.eventosFiltrados = this.filtroLista
-      ? this.filtrarEventos(this.filtroLista)
-      : this.eventos;
-  }
-
-  public filtrarEventos(filtrarPor: string): Evento[] {
-    filtrarPor = filtrarPor.toLocaleLowerCase();
-    return this.eventos.filter(
-      (evento: Evento) =>
-        evento.tema.toLocaleLowerCase().indexOf(filtrarPor) !== -1
-    );
+  public filtrarEventos(evt: any): void {
+    this.eventoService.getEventos(
+      this.pagination.currentPage,
+      this.pagination.itemsPerPage,
+      evt.value
+    ).subscribe({
+      next: (response: PaginationResult<Evento[]>) => {
+        this.eventos = response.result;
+        this.pagination = response.pagination;
+      },
+      error: (error: any) => {
+        this.toastr.error('Erro ao buscar Eventos.', 'Erro');
+        this.spinner.hide();
+      },
+    })
+    .add(() => this.spinner.hide());
   }
 
   constructor(
@@ -55,7 +52,11 @@ export class EventosListaComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.pagination = {currentPage: 1, itemsPerPage: 4, totalItems: 10} as Pagination;
+    this.pagination = {
+      currentPage: 1,
+      itemsPerPage: 4,
+      totalItems: 10,
+    } as Pagination;
     this.getEventos();
   }
 
@@ -64,27 +65,28 @@ export class EventosListaComponent implements OnInit {
     this.exibirImg = this.mostrarImg;
   }
 
-  public mostrarImagem(imagemUrl: string): string{
-    return (imagemUrl !== '')
-    ? `${environment.apiURL}resources/images/${imagemUrl}`
-    : 'assets/img/semimagem.jpg';
+  public mostrarImagem(imagemUrl: string): string {
+    return imagemUrl !== ''
+      ? `${environment.apiURL}resources/images/${imagemUrl}`
+      : 'assets/img/semimagem.jpg';
   }
 
   public getEventos(): void {
     this.spinner.show();
-    this.eventoService.getEventos(this.pagination.currentPage,
-      this.pagination.itemsPerPage).subscribe({
-      next: (response: PaginationResult<Evento[]>) => {
-        this.eventos = response.result;
-        this.eventosFiltrados = this.eventos;
-        this.pagination = response.pagination;
-        console.log(this.pagination);
-      },
-      error: (error: any) => {
-        this.toastr.error('Erro ao buscar Eventos.', 'Erro');
-        this.spinner.hide();
-      },
-    }).add(() => this.spinner.hide());
+    this.eventoService
+      .getEventos(this.pagination.currentPage, this.pagination.itemsPerPage)
+      .subscribe({
+        next: (response: PaginationResult<Evento[]>) => {
+          this.eventos = response.result;
+          this.pagination = response.pagination;
+          console.log(this.pagination);
+        },
+        error: (error: any) => {
+          this.toastr.error('Erro ao buscar Eventos.', 'Erro');
+          this.spinner.hide();
+        },
+      })
+      .add(() => this.spinner.hide());
   }
 
   openModal(
@@ -100,7 +102,7 @@ export class EventosListaComponent implements OnInit {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
-  public pageChanged(event: any) : void{
+  public pageChanged(event: any): void {
     this.pagination.currentPage = event.page;
     this.getEventos();
   }
@@ -111,7 +113,6 @@ export class EventosListaComponent implements OnInit {
 
     this.eventoService.deleteEvento(this.eventoId).subscribe(
       (result: any) => {
-        console.log(result);
         this.toastr.success('O Evento foi deletado com sucesso.', 'Deletado');
         this.spinner.hide();
         this.getEventos();

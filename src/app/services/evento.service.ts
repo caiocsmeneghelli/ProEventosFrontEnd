@@ -18,7 +18,7 @@ export class EventoService {
   //   Authorization: `Bearer ${this.token}`,
   // });
 
-  public getEventos(page?: number, itemsPerPage?: number): Observable<PaginationResult<Evento[]>> {
+  public getEventos(page?: number, itemsPerPage?: number, term?: string): Observable<PaginationResult<Evento[]>> {
     const paginationResult: PaginationResult<Evento[]> = new PaginationResult<Evento[]>();
 
     let params =  new HttpParams;
@@ -26,6 +26,10 @@ export class EventoService {
     if(page != null && itemsPerPage != null){
       params = params.append('pageNumber', page.toString());
       params = params.append('pageSize', itemsPerPage.toString());
+    }
+
+    if(term != null && term != ''){
+      params = params.append('term', term);
     }
 
     return this.http
