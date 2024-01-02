@@ -18,7 +18,7 @@ export class EventosListaComponent implements OnInit {
   public eventos: Evento[] = [];
   public eventoId = 0;
   public pagination = {} as Pagination;
-  public totalItems: number;
+  public msgFiltrarPor: string;
 
   modalRef = {} as BsModalRef;
   larguraImg: number = 100;
@@ -29,26 +29,29 @@ export class EventosListaComponent implements OnInit {
   termoBuscaChanged: Subject<string> = new Subject<string>();
 
   public filtrarEventos(evt: any): void {
-    this.termoBuscaChanged.pipe(debounceTime(1500)).subscribe((filtrarPor) => {
-      this.spinner.show();
-      this.eventoService
-        .getEventos(
-          this.pagination.currentPage,
-          this.pagination.itemsPerPage,
-          filtrarPor
-        )
-        .subscribe({
-          next: (response: PaginationResult<Evento[]>) => {
-            this.eventos = response.result;
-            this.pagination = response.pagination;
-          },
-          error: (error: any) => {
-            this.toastr.error('Erro ao buscar Eventos.', 'Erro');
-            this.spinner.hide();
-          },
-        })
-        .add(() => this.spinner.hide());
-    });
+    if (this.termoBuscaChanged.observers.length === 0) {
+      this.termoBuscaChanged.pipe(debounceTime(1500)).subscribe((filtrarPor) => {
+        this.spinner.show();
+        this.msgFiltrarPor = filtrarPor;
+        this.eventoService
+          .getEventos(
+            this.pagination.currentPage,
+            this.pagination.itemsPerPage,
+            filtrarPor
+          )
+          .subscribe({
+            next: (response: PaginationResult<Evento[]>) => {
+              this.eventos = response.result;
+              this.pagination = response.pagination;
+            },
+            error: (error: any) => {
+              this.toastr.error('Erro ao buscar Eventos.', 'Erro');
+              this.spinner.hide();
+            },
+          })
+          .add(() => this.spinner.hide());
+      });
+    }
     this.termoBuscaChanged.next(evt.value);
   }
 
@@ -81,11 +84,11 @@ export class EventosListaComponent implements OnInit {
       : 'assets/img/semimagem.jpg';
   }
 
-  public getEventos(): void {
+  public getEventos(filtrar?:string): void {
     this.spinner.show();
 
     this.eventoService
-      .getEventos(this.pagination.currentPage, this.pagination.itemsPerPage)
+      .getEventos(this.pagination.currentPage, this.pagination.itemsPerPage, filtrar)
       .subscribe({
         next: (response: PaginationResult<Evento[]>) => {
           this.eventos = response.result;
@@ -113,7 +116,8 @@ export class EventosListaComponent implements OnInit {
 
   public pageChanged(event: any): void {
     this.pagination.currentPage = event.page;
-    this.getEventos();
+
+    this.getEventos(this.msgFiltrarPor);
   }
 
   confirm(): void {
