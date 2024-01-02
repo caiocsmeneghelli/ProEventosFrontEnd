@@ -18,6 +18,7 @@ export class EventosListaComponent implements OnInit {
   public eventos: Evento[] = [];
   public eventoId = 0;
   public pagination = {} as Pagination;
+  public totalItems: number;
 
   modalRef = {} as BsModalRef;
   larguraImg: number = 100;
@@ -28,31 +29,27 @@ export class EventosListaComponent implements OnInit {
   termoBuscaChanged: Subject<string> = new Subject<string>();
 
   public filtrarEventos(evt: any): void {
-    if (this.termoBuscaChanged.observers.length === 0) {
-      this.termoBuscaChanged
-      .pipe(debounceTime(5000))
-      .subscribe((filtrarPor) => {
-          this.spinner.show();
-          this.eventoService
-            .getEventos(
-              this.pagination.currentPage,
-              this.pagination.itemsPerPage,
-              filtrarPor
-            )
-            .subscribe({
-              next: (response: PaginationResult<Evento[]>) => {
-                this.eventos = response.result;
-                this.pagination = response.pagination;
-              },
-              error: (error: any) => {
-                this.toastr.error('Erro ao buscar Eventos.', 'Erro');
-                this.spinner.hide();
-              },
-            })
-            .add(() => this.spinner.hide());
-        });
-        this.termoBuscaChanged.next(evt.value);
-    }
+    this.termoBuscaChanged.pipe(debounceTime(1500)).subscribe((filtrarPor) => {
+      this.spinner.show();
+      this.eventoService
+        .getEventos(
+          this.pagination.currentPage,
+          this.pagination.itemsPerPage,
+          filtrarPor
+        )
+        .subscribe({
+          next: (response: PaginationResult<Evento[]>) => {
+            this.eventos = response.result;
+            this.pagination = response.pagination;
+          },
+          error: (error: any) => {
+            this.toastr.error('Erro ao buscar Eventos.', 'Erro');
+            this.spinner.hide();
+          },
+        })
+        .add(() => this.spinner.hide());
+    });
+    this.termoBuscaChanged.next(evt.value);
   }
 
   constructor(
@@ -67,7 +64,7 @@ export class EventosListaComponent implements OnInit {
     this.pagination = {
       currentPage: 1,
       itemsPerPage: 4,
-      totalItems: 1,
+      totalItems: 10,
     } as Pagination;
 
     this.getEventos();

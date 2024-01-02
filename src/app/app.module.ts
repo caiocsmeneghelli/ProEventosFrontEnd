@@ -73,7 +73,7 @@ defineLocale('pt-br', ptBrLocale);
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    PaginationModule.forRoot(),
+    PaginationModule,
     BsDatepickerModule.forRoot(),
     NgxSpinnerModule,
     NgxCurrencyModule,
