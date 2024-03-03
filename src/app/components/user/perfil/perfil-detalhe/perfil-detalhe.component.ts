@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  AbstractControlOptions,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ValidatorField } from '@app/helpers/ValidatorField';
 import { UserUpdate } from '@app/models/Identity/UserUpdate';
@@ -10,21 +15,32 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-perfil-detalhe',
   templateUrl: './perfil-detalhe.component.html',
-  styleUrls: ['./perfil-detalhe.component.scss']
+  styleUrls: ['./perfil-detalhe.component.scss'],
 })
 export class PerfilDetalheComponent implements OnInit {
+  @Output() changeFormValue = new EventEmitter();
+
   form!: FormGroup;
   userUpdate = {} as UserUpdate;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit() {
     this.validation();
     this.carregarUsuario();
+    this.verificaForm();
+  }
+
+  private verificaForm(): void {
+    this.form.valueChanges.subscribe(() => {
+      this.changeFormValue.emit({ ...this.form.value });
+    });
   }
 
   private carregarUsuario(): void {
@@ -79,7 +95,7 @@ export class PerfilDetalheComponent implements OnInit {
   }
 
   public atualizarUsuario() {
-    this.userUpdate = {...this.form.value};
+    this.userUpdate = { ...this.form.value };
     this.spinner.show();
 
     this.userService.updateUser(this.userUpdate).subscribe(
@@ -88,7 +104,9 @@ export class PerfilDetalheComponent implements OnInit {
         this.toastr.error(error.error);
         console.error(error);
       },
-      () => {this.spinner.hide()}
+      () => {
+        this.spinner.hide();
+      }
     );
   }
 

@@ -18,11 +18,16 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./perfil.component.scss'],
 })
 export class PerfilComponent implements OnInit {
+  userUpdate = {} as UserUpdate;
   constructor(
-
   ) {}
 
   ngOnInit(): void {
+  }
+
+  public setFormValue(usuario: UserUpdate): void{
+    console.log(usuario);
+    this.userUpdate = usuario;
   }
 
   // Conveniente para pegar um FormField apenas com a letra F
