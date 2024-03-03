@@ -10,6 +10,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 
@@ -74,6 +76,7 @@ defineLocale('pt-br', ptBrLocale);
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     PaginationModule,
+    TabsModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgxSpinnerModule,
     NgxCurrencyModule,
