@@ -34,4 +34,8 @@ export class PerfilComponent implements OnInit {
   get f(): any {
     return '';
   }
+
+  public get isPalestrante(): boolean{
+    return this.userUpdate.funcao === 'Palestrante';
+  }
 }
