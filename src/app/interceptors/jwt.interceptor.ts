@@ -5,7 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import { Observable, take } from 'rxjs';
+import { Observable, catchError, take, throwError } from 'rxjs';
 import { User } from '@app/models/Identity/User';
 import { UserService } from '@app/services/user.service';
 
@@ -17,15 +17,6 @@ export class JwtInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    // let currentUser = this.userService.getUser();
-    // if(currentUser){
-    //   request = request.clone({
-    //     setHeaders: {
-    //       Authorization: `Bearer ${currentUser.token}`
-    //     }
-    //   })
-    // };
-
     let currentUser = {} as User;
     this.userService.currentUser$.pipe(take(1)).subscribe((user) => {
       currentUser = user;
@@ -38,6 +29,13 @@ export class JwtInterceptor implements HttpInterceptor {
       }
     });
 
-    return next.handle(request);
+    return next.handle(request).pipe(
+      catchError(error => {
+        if(error){
+          localStorage.removeItem('user');
+        }
+        return throwError(error);
+      })
+    );
   }
 }
