@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserUpdate } from '@app/models/Identity/UserUpdate';
 import { UserService } from '@app/services/user.service';
+import { environment } from '@enviroments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 
@@ -23,8 +24,13 @@ export class PerfilComponent implements OnInit {
   ngOnInit(): void {}
 
   public setFormValue(usuario: UserUpdate): void {
-    console.log(usuario);
     this.userUpdate = usuario;
+    if(this.userUpdate.imagemURL){
+      this.imagemUrl = environment.apiURL + `resources/perfil/${this.userUpdate.imagemURL}`;
+    }else{
+      this.imagemUrl = './assets/img/perfil.png';
+    }
+    console.log(usuario);
   }
 
   public get isPalestrante(): boolean {
