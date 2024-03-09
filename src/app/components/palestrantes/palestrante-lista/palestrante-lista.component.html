@@ -1,0 +1,16 @@
+<div class="card rounded shadow-sm p-3">
+  <div class="d-flex">
+    <div class="flex-fill pe-3">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend"></div>
+        <div class="input-group-text">Filtro</div>
+        <input
+          type="text"
+          class="form-control mr-2"
+          placeholder="Buscar por Tema e Local"
+          (input)="filtrarPalestrantes($event.target)"
+        />
+      </div>
+    </div>
+  </div>
+</div>
