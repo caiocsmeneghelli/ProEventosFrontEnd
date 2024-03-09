@@ -13,4 +13,12 @@
       </div>
     </div>
   </div>
+  <div *ngIf="palestrantes && palestrantes.length">
+    <div
+      class="col-md-4 mb-4 d-flex align-items-stretch"
+      *ngFor="let palestrante of palestrantes"
+    >
+      {{ palestrante.user.userName }}
+    </div>
+  </div>
 </div>
