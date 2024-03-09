@@ -67,6 +67,7 @@ export class PalestranteListaComponent implements OnInit {
       .getPalestrantes(this.pagination.currentPage, this.pagination.itemsPerPage, filtrar)
       .subscribe({
         next: (response: PaginationResult<Palestrante[]>) => {
+          console.log(response);
           this.palestrantes = response.result;
           this.pagination = response.pagination;
         },
