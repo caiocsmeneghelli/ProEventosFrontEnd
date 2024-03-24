@@ -16,7 +16,7 @@ constructor(private http: HttpClient) { }
 /**
  *
  * @param origem Precisa passar a palavra 'palestrante' ou 'evento' - escrito em minusculo.
- * @param id Precisa passar o EventoId caso origem seja Evento
+ * @param id Precisa passar o EventoId caso origem seja Evento, caso a origem seja Palestrante passar 0.
  * @returns Observable<RedeSocial[]>
  */
   public getRedesSociais(origem: string, id: number): Observable<RedeSocial[]>{

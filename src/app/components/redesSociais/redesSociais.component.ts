@@ -34,11 +34,27 @@ export class RedesSociaisComponent implements OnInit {
 
   ngOnInit() {
     this.validation();
-    if(this.eventoId === 0){
-      this.carregarRedesSociais('palestrante', this.eventoId);
-    }else{
+    if (this.eventoId === 0) {
+      this.carregarRedesSociais('palestrante');
+    } else {
       this.carregarRedesSociais('evento', this.eventoId);
     }
+  }
+
+  private carregarRedesSociais(origem: string, id: number = 0): void {
+    this.spinner.show();
+
+    this.redeSocialService.getRedesSociais(origem, id).subscribe(
+      (redesSociaisRetorno: RedeSocial[]) => {
+        redesSociaisRetorno.forEach((redeSocial) => {
+          this.redesSociais.push(this.criarRedeSocial(redeSocial));
+        });
+      },
+      (error: any) => {
+        this.toastr.error('Erro ao tentar buscar Redes Sociais', 'Erro');
+        console.error(error);
+      }
+    ).add(() => this.spinner.hide());
   }
 
   public get redesSociais(): FormArray {
@@ -47,7 +63,7 @@ export class RedesSociaisComponent implements OnInit {
 
   public validation(): void {
     this.formRS = this.fb.group({
-      redeSociais: this.fb.array([]),
+      redesSociais: this.fb.array([]),
     });
   }
 
@@ -71,7 +87,7 @@ export class RedesSociaisComponent implements OnInit {
     return { 'is-invalid': campoForm.errors && campoForm.touched };
   }
 
-  public removeRedeSocial(template: TemplateRef<any>, indice: number): void {
+  public removerRedeSocial(template: TemplateRef<any>, indice: number): void {
     this.redeSocialAtual.id = this.redesSociais.get(indice + '.id')?.value;
     this.redeSocialAtual.nome = this.redesSociais.get(indice + '.nome')?.value;
     this.redeSocialAtual.indice = indice;
@@ -80,19 +96,19 @@ export class RedesSociaisComponent implements OnInit {
   }
 
   public salvarRedesSociais(): void {
-    if (this.formRS.controls['redeSociais'].valid) {
+    if (this.formRS.controls['redesSociais'].valid) {
       this.spinner.show();
-      this.redeSocialService
-        .saveLote(this.eventoId, this.formRS.value.redeSociais)
-        .subscribe(
-          () =>
-            this.toastr.success('Redes Sociais salvas com sucesso.', 'Sucesso'),
-          (error: any) => {
-            this.toastr.error('Erro ao tentar salvar Redes Sociais.', 'Erro');
-            console.error(error);
-          }
-        )
-        .add(() => this.spinner.hide());
+      // this.redeSocialService
+      //   .saveLote(this.eventoId, this.formRS.value.redeSociais)
+      //   .subscribe(
+      //     () =>
+      //       this.toastr.success('Redes Sociais salvas com sucesso.', 'Sucesso'),
+      //     (error: any) => {
+      //       this.toastr.error('Erro ao tentar salvar Redes Sociais.', 'Erro');
+      //       console.error(error);
+      //     }
+      //   )
+      //   .add(() => this.spinner.hide());
     }
   }
 
@@ -100,24 +116,25 @@ export class RedesSociaisComponent implements OnInit {
     this.modalRef.hide();
     this.spinner.show();
 
-    this.redeSocialService
-      .deletarRedeSocial(this.eventoId, this.redeSocialAtual.id)
-      .subscribe(
-        () => {
-          this.toastr.success('Rede Social removida com sucesso.', 'Success');
-          this.redesSociais.removeAt(this.redeSocialAtual.indice);
-        },
-        (error: any) => {
-          this.toastr.error(
-            `Erro ao tentar deletar a Rede Social ${this.redeSocialAtual.nome}`,
-            'Erro'
-          );
-          console.log(error);
-        }
-      ).add(() => this.spinner.hide());
+    // this.redeSocialService
+    //   .deletarRedeSocial(this.eventoId, this.redeSocialAtual.id)
+    //   .subscribe(
+    //     () => {
+    //       this.toastr.success('Rede Social removida com sucesso.', 'Success');
+    //       this.redesSociais.removeAt(this.redeSocialAtual.indice);
+    //     },
+    //     (error: any) => {
+    //       this.toastr.error(
+    //         `Erro ao tentar deletar a Rede Social ${this.redeSocialAtual.nome}`,
+    //         'Erro'
+    //       );
+    //       console.log(error);
+    //     }
+    //   )
+    //   .add(() => this.spinner.hide());
   }
 
-  public declineDeleteRedeSocial(): void{
+  public declineDeleteRedeSocial(): void {
     this.modalRef.hide();
   }
 }

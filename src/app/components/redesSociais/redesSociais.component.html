@@ -7,13 +7,13 @@
     >
       <fieldset [formGroupName]="i" class="form-group">
         <legend class="d-flex justify-content-between capitalize">
-          {{ retornaTitulo(redesSociais.get(i + ".nome").value) }}
-          <button class="btn btn-sm btn-warning mb-1" (click)="removerRedSocial(template, i)">remove</button>
+          {{ retornaTitulo(redesSociais.get(i + ".nome")?.value) }}
+          <button class="btn btn-sm btn-warning mb-1" (click)="removerRedeSocial(template, i)">remove</button>
         </legend>
         <div class="row">
           <div class="form-group col-md-4">
             <label>Nome</label>
-            <select class="form-control" [ngClass]="cssValidator(redesSociais.get(i+'.nome'))" formControlName="nome">
+            <select class="form-control" [ngClass]="cssValidator(redesSociais.get(i+'.nome')?.value)" formControlName="nome">
             <option value="">Selecione</option>
             <option value="fab fa-youtube">Youtube</option>
             <option value="fab fa-instagram">Instagram</option>
@@ -28,12 +28,17 @@
             <option value="fab fa-vimeo">Vimeo</option>
             </select>
           </div>
+          <div class="form-group col-md-8">
+            <label>Link</label>
+            <input type="text" prefix="http://" mask="" [ngClass]="cssValidator(redesSociais.get(i+'.url')?.value)"
+              formControlName="url" class="form-control" placeholder="URL">
+          </div>
         </div>
       </fieldset>
     </div>
     <button (click)="adicionarRedeSocial()" class="d-flex btn btn-outline-primary">
       <i class="fa fa-plus-circle my-1"></i>
-      <b class="ml-1">Rede Social</b>
+      <b class="ml-1"> Rede Social</b>
     </button>
   </div>
 </div>
@@ -43,7 +48,7 @@
     <button class="btn btn-outline-secondary mr-auto border">
       Cancelar Alteração
     </button>
-    <button [disabled]="!formRS.controls.redesSociais.valid" (click)="salvarRedesSociais()">
+    <button [disabled]="!formRS.controls['redesSociais'].valid" (click)="salvarRedesSociais()">
       Salvar Redes Sociais
     </button>
   </div>
