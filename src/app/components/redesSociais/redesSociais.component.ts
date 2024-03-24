@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RedeSocial } from '@app/models/RedeSocial';
+import { RedeSocialService } from '@app/services/redeSocial.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -33,6 +34,11 @@ export class RedesSociaisComponent implements OnInit {
 
   ngOnInit() {
     this.validation();
+    if(this.eventoId === 0){
+      this.carregarRedesSociais('palestrante', this.eventoId);
+    }else{
+      this.carregarRedesSociais('evento', this.eventoId);
+    }
   }
 
   public get redesSociais(): FormArray {
