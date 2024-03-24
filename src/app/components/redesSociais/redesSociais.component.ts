@@ -1,0 +1,117 @@
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { RedeSocial } from '@app/models/RedeSocial';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
+
+@Component({
+  selector: 'app-redesSociais',
+  templateUrl: './redesSociais.component.html',
+  styleUrls: ['./redesSociais.component.scss'],
+})
+export class RedesSociaisComponent implements OnInit {
+  modalRef: BsModalRef;
+  public eventoId = 0;
+  public formRS: FormGroup;
+  public redeSocialAtual = { id: 0, nome: '', indice: 0 };
+
+  constructor(
+    private fb: FormBuilder,
+    private redeSocialService: RedeSocialService,
+    private toastr: ToastrService,
+    private modalService: BsModalService,
+    private spinner: NgxSpinnerService
+  ) {}
+
+  ngOnInit() {
+    this.validation();
+  }
+
+  public get redesSociais(): FormArray {
+    return this.formRS.get('redesSociais') as FormArray;
+  }
+
+  public validation(): void {
+    this.formRS = this.fb.group({
+      redeSociais: this.fb.array([]),
+    });
+  }
+
+  public adicionarRedeSocial(): void {
+    this.redesSociais.push(this.criarRedeSocial({ id: 0 } as RedeSocial));
+  }
+
+  public criarRedeSocial(redeSocial: RedeSocial): FormGroup {
+    return this.fb.group({
+      id: [redeSocial.id],
+      nome: [redeSocial.nome, Validators.required],
+      url: [redeSocial.url, Validators.required],
+    });
+  }
+
+  public retornaTitulo(nome: string): string {
+    return nome == null || nome == '' ? 'Rede Social' : nome;
+  }
+
+  public cssValidator(campoForm: FormControl | AbstractControl): any {
+    return { 'is-invalid': campoForm.errors && campoForm.touched };
+  }
+
+  public removeRedeSocial(template: TemplateRef<any>, indice: number): void {
+    this.redeSocialAtual.id = this.redesSociais.get(indice + '.id')?.value;
+    this.redeSocialAtual.nome = this.redesSociais.get(indice + '.nome')?.value;
+    this.redeSocialAtual.indice = indice;
+
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+  }
+
+  public salvarRedesSociais(): void {
+    if (this.formRS.controls['redeSociais'].valid) {
+      this.spinner.show();
+      this.redeSocialService
+        .saveLote(this.eventoId, this.formRS.value.redeSociais)
+        .subscribe(
+          () =>
+            this.toastr.success('Redes Sociais salvas com sucesso.', 'Sucesso'),
+          (error: any) => {
+            this.toastr.error('Erro ao tentar salvar Redes Sociais.', 'Erro');
+            console.error(error);
+          }
+        )
+        .add(() => this.spinner.hide());
+    }
+  }
+
+  public confirmDeleteRedeSocial(): void {
+    this.modalRef.hide();
+    this.spinner.show();
+
+    this.redeSocialService
+      .deletarRedeSocial(this.eventoId, this.redeSocialAtual.id)
+      .subscribe(
+        () => {
+          this.toastr.success('Rede Social removida com sucesso.', 'Success');
+          this.redesSociais.removeAt(this.redeSocialAtual.indice);
+        },
+        (error: any) => {
+          this.toastr.error(
+            `Erro ao tentar deletar a Rede Social ${this.redeSocialAtual.nome}`,
+            'Erro'
+          );
+          console.log(error);
+        }
+      ).add(() => this.spinner.hide());
+  }
+
+  public declineDeleteRedeSocial(): void{
+    this.modalRef.hide();
+  }
+}

@@ -30,6 +30,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { PerfilDetalheComponent } from './components/user/perfil/perfil-detalhe/perfil-detalhe.component';
+import { RedesSociaisComponent } from './components/redesSociais/redesSociais.component';
 import { TitleComponent } from './shared/title/title.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -66,6 +67,7 @@ defineLocale('pt-br', ptBrLocale);
     EventosDetalheComponent,
     EventosListaComponent,
     UserComponent,
+    RedesSociaisComponent,
     LoginComponent,
     RegistrationComponent,
     HomeComponent
