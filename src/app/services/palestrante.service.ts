@@ -48,6 +48,6 @@ export class PalestranteService {
   }
 
   public put(palestrante: Palestrante): Observable<Palestrante> {
-    return this.http.put<Palestrante>(`${this.baseUrl}/${palestrante.id}`, palestrante);
+    return this.http.put<Palestrante>(`${this.baseUrl}`, palestrante);
   }
 }
