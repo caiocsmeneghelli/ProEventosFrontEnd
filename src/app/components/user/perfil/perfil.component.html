@@ -1,4 +1,4 @@
-<app-title [titulo]="'Perfil'"></app-title>
+<app-title [titulo]="'Perfil ' + (isPalestrante ? 'Palestrante' : 'Participante')"></app-title>
 <div class="card rounded shadow-sm">
   <div class="row p-3">
     <div class="col-lg-3 pt-1">
@@ -35,7 +35,7 @@
               </div>
               <div class="col-6 text-center">
                 <div class="h5">1342</div>
-                <div class="h6 text-muted">Eventos Participados</div>
+                <div class="h6 text-muted">Eventos como {{isPalestrante ? 'Palestrante' : 'Participante'}}</div>
               </div>
             </div>
           </li>
