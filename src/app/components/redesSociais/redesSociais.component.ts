@@ -83,8 +83,8 @@ export class RedesSociaisComponent implements OnInit {
     return nome == null || nome == '' ? 'Rede Social' : nome;
   }
 
-  public cssValidator(campoForm: FormControl | AbstractControl): any {
-    return { 'is-invalid': campoForm.errors && campoForm.touched };
+  public cssValidator(campoForm: FormControl | AbstractControl | null): any {
+    return { 'is-invalid': campoForm?.errors && campoForm?.touched };
   }
 
   public removerRedeSocial(template: TemplateRef<any>, indice: number): void {
@@ -101,7 +101,7 @@ export class RedesSociaisComponent implements OnInit {
     if (this.formRS.controls['redesSociais'].valid) {
       this.spinner.show();
       this.redeSocialService
-        .saveRedesSociais(origem, this.eventoId, this.formRS.value.redeSociais)
+        .saveRedesSociais(origem, this.eventoId, this.formRS.value.redesSociais)
         .subscribe(
           () =>
             this.toastr.success('Redes Sociais salvas com sucesso.', 'Sucesso'),
@@ -119,6 +119,11 @@ export class RedesSociaisComponent implements OnInit {
 
     this.modalRef.hide();
     this.spinner.show();
+
+    if(this.redeSocialAtual.id == null){
+      this.redesSociais.removeAt(this.redeSocialAtual.indice);
+      this.toastr.success('Rede Social removida com sucesso.', 'Success');
+    }
 
     this.redeSocialService
       .deleteRedeSocial(origem, this.eventoId, this.redeSocialAtual.id)

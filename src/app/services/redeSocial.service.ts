@@ -44,6 +44,7 @@ export class RedeSocialService {
         ? `${this.baseURL}/${origem}`
         : `${this.baseURL}/${origem}/${id}`;
 
+    console.log(redeSociais);
     return this.http.put<RedeSocial[]>(url, redeSociais).pipe(take(1));
   }
 
