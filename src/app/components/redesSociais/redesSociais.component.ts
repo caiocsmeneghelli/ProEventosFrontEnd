@@ -20,7 +20,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RedesSociaisComponent implements OnInit {
   modalRef: BsModalRef;
-  @Input() eventoId = 0;
+  @Input() evento = 0;
   public formRS: FormGroup;
   public redeSocialAtual = { id: 0, nome: '', indice: 0 };
 
@@ -34,10 +34,10 @@ export class RedesSociaisComponent implements OnInit {
 
   ngOnInit() {
     this.validation();
-    if (this.eventoId === 0) {
+    if (this.evento === 0) {
       this.carregarRedesSociais('palestrante');
     } else {
-      this.carregarRedesSociais('evento', this.eventoId);
+      this.carregarRedesSociais('evento', this.evento);
     }
   }
 
@@ -96,12 +96,12 @@ export class RedesSociaisComponent implements OnInit {
   }
 
   public salvarRedesSociais(): void {
-    let origem = this.eventoId !== 0 ? 'evento' : 'palestrante';
+    let origem = this.evento !== 0 ? 'evento' : 'palestrante';
 
     if (this.formRS.controls['redesSociais'].valid) {
       this.spinner.show();
       this.redeSocialService
-        .saveRedesSociais(origem, this.eventoId, this.formRS.value.redesSociais)
+        .saveRedesSociais(origem, this.evento, this.formRS.value.redesSociais)
         .subscribe(
           () =>
             this.toastr.success('Redes Sociais salvas com sucesso.', 'Sucesso'),
@@ -115,7 +115,7 @@ export class RedesSociaisComponent implements OnInit {
   }
 
   public confirmDeleteRedeSocial(): void {
-    let origem = this.eventoId !== 0 ? 'evento' : 'palestrante';
+    let origem = this.evento !== 0 ? 'evento' : 'palestrante';
 
     this.modalRef.hide();
     this.spinner.show();
@@ -126,7 +126,7 @@ export class RedesSociaisComponent implements OnInit {
     }
 
     this.redeSocialService
-      .deleteRedeSocial(origem, this.eventoId, this.redeSocialAtual.id)
+      .deleteRedeSocial(origem, this.evento, this.redeSocialAtual.id)
       .subscribe(
         () => {
           this.toastr.success('Rede Social removida com sucesso.', 'Success');
